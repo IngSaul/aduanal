@@ -90,10 +90,21 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-3 py-7 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[11px] tracking-[0.1em] text-steel-300">{copy.footer.rights}</p>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-steel-300 uppercase">
-            {copy.brand.name} · {copy.brand.descriptor}
+          <p className="font-mono text-[11px] tracking-[0.1em] text-steel-300">
+            {copy.footer.rights}{' '}
+            <span aria-hidden="true">·</span>{' '}
+            <Link to={copy.footer.privacy.to} className="link-underline transition-colors hover:text-white">
+              {copy.footer.privacy.label}
+            </Link>
           </p>
+          <a
+            href={copy.footer.credit.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[11px] tracking-[0.18em] text-steel-300 uppercase transition-colors hover:text-white"
+          >
+            {copy.footer.credit.label} · <span className="text-gold">{copy.footer.credit.studio}</span>
+          </a>
         </div>
       </div>
     </footer>

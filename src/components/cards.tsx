@@ -1,117 +1,127 @@
 import type { ComponentType, ReactNode, SVGProps } from 'react'
 import { Link } from 'react-router'
-import { unsplash } from '../content/copy'
-import { useCopy } from '../i18n'
-import { IconArrowUpRight } from './icons'
 import { Card, Img } from './ui'
 
 type IconType = ComponentType<SVGProps<SVGSVGElement>>
 
 /* -------------------------------------------------------------- FeatureCard */
 
+/**
+ * Service teaser. With `image` the card turns dark: the photograph sits behind
+ * a navy wash so the copy stays legible, and drifts in on hover.
+ */
 export function FeatureCard({
   index,
   icon: Icon,
   title,
   text,
   to,
+  image,
 }: {
   index: number
   icon: IconType
   title: string
   text: string
   to?: string
+  image?: string
 }) {
+  const dark = Boolean(image)
+
   const body = (
     <>
       <div className="flex items-start justify-between">
-        <span className="grid h-12 w-12 place-items-center rounded-[10px] bg-mist text-blue transition-colors duration-400 group-hover:bg-navy group-hover:text-gold">
+        <span
+          className={`grid h-12 w-12 place-items-center rounded-[10px] transition-colors duration-400 ${
+            dark
+              ? 'border border-white/20 bg-navy/40 text-gold backdrop-blur-sm group-hover:border-gold group-hover:bg-gold group-hover:text-navy'
+              : 'bg-mist text-blue group-hover:bg-navy group-hover:text-gold'
+          }`}
+        >
           <Icon className="h-6 w-6" />
         </span>
-        <span className="font-mono text-[10.5px] font-medium tracking-[0.2em] text-light">
+        <span
+          className={`font-mono text-[10.5px] font-medium tracking-[0.2em] ${dark ? 'text-light/70' : 'text-light'}`}
+        >
           {String(index).padStart(2, '0')}
         </span>
       </div>
-      <h3 className="mt-7 text-[17px] leading-snug font-bold tracking-[-0.015em] text-navy">
+      <h3
+        className={`text-[17px] leading-snug font-bold tracking-[-0.015em] ${
+          dark ? 'mt-auto pt-16 text-white' : 'mt-7 text-navy'
+        }`}
+      >
         {title}
       </h3>
-      <p className="mt-3 text-[14px] leading-[1.75] text-steel">{text}</p>
+      <p className={`mt-3 text-[14px] leading-[1.75] ${dark ? 'text-light/80' : 'text-steel'}`}>
+        {text}
+      </p>
       <span className="mt-6 block h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-500 ease-out group-hover:scale-x-100" />
     </>
   )
 
-  const className = 'group flex h-full flex-col p-7'
+  const className = 'group relative flex h-full flex-col p-7'
+  const content = to ? (
+    <Link to={to} className={className}>
+      {body}
+    </Link>
+  ) : (
+    <div className={className}>{body}</div>
+  )
+
+  if (!image) {
+    return (
+      <Card interactive className="h-full">
+        {content}
+      </Card>
+    )
+  }
 
   return (
-    <Card interactive className="h-full">
-      {to ? (
-        <Link to={to} className={className}>
-          {body}
-        </Link>
-      ) : (
-        <div className={className}>{body}</div>
-      )}
-    </Card>
+    <div className="group relative isolate h-full min-h-[340px] overflow-hidden rounded-card bg-navy transition-all duration-400 ease-out hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-24px_rgba(13,27,42,0.6)]">
+      {/* Decorative: the title and text already say what the photo shows. */}
+      <Img
+        src={image}
+        alt=""
+        className="absolute inset-0 -z-10 h-full w-full"
+        imgClassName="opacity-70 transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+      />
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-navy via-navy/85 to-navy/35 transition-opacity duration-500"
+        aria-hidden="true"
+      />
+      {content}
+    </div>
   )
 }
 
-/* ------------------------------------------------------------- IndustryCard */
+/* --------------------------------------------------------------- ClientGrid */
 
-export type IndustryLike = {
-  id: string
-  name: string
-  short: string
-  description: string
-  points: readonly string[]
-  image: string
-  imageAlt: string
-}
+export type ClientLike = { name: string; logo?: string }
 
-export function IndustryCard({
-  industry,
-  onOpen,
-  aspect = 'aspect-[4/3]',
-}: {
-  industry: IndustryLike
-  onOpen: () => void
-  aspect?: string
-}) {
-  const copy = useCopy()
-
+/** Wall of client marks. Shows the logo when there is one, the name otherwise. */
+export function ClientGrid({ clients }: { clients: readonly ClientLike[] }) {
   return (
-    <article className="group relative overflow-hidden rounded-card bg-navy">
-      <Img
-        src={unsplash(industry.image, 900, 700)}
-        alt={industry.imageAlt}
-        className={`${aspect} w-full`}
-        imgClassName="transition-transform duration-[900ms] ease-out group-hover:scale-[1.06] opacity-85"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-navy/20 transition-opacity duration-500 group-hover:via-navy/90 group-hover:to-navy/35"
-        aria-hidden="true"
-      />
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-6 md:p-7">
-        <p className="font-mono text-[10.5px] font-medium tracking-[0.2em] text-gold uppercase">
-          {copy.common.sector}
-        </p>
-        <h3 className="text-[19px] leading-snug font-bold tracking-[-0.015em] text-white">
-          {industry.name}
-        </h3>
-        <p className="text-[13.5px] leading-relaxed text-light/75">{industry.short}</p>
-        <button
-          type="button"
-          onClick={onOpen}
-          className="mt-1 inline-flex w-fit items-center gap-2 border-b border-gold pt-2 pb-2 text-[12px] font-semibold tracking-[0.11em] text-white uppercase transition-colors hover:text-gold"
+    <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-card bg-navy/10 md:grid-cols-3">
+      {clients.map((client) => (
+        <li
+          key={client.name}
+          className="grid h-28 place-items-center bg-white px-6 text-center transition-colors duration-400 hover:bg-mist md:h-32"
         >
-          {copy.common.viewIndustry}
-          <IconArrowUpRight className="h-3.5 w-3.5" />
-        </button>
-      </div>
-      <span
-        className="absolute top-0 left-0 h-1 w-full origin-left scale-x-0 bg-gold transition-transform duration-500 ease-out group-hover:scale-x-100"
-        aria-hidden="true"
-      />
-    </article>
+          {client.logo ? (
+            <img
+              src={client.logo}
+              alt={client.name}
+              loading="lazy"
+              className="max-h-10 w-auto max-w-[70%] object-contain opacity-70 grayscale transition duration-400 hover:opacity-100 hover:grayscale-0"
+            />
+          ) : (
+            <span className="text-[15px] font-bold tracking-[0.06em] text-navy/70 uppercase md:text-[17px]">
+              {client.name}
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
   )
 }
 

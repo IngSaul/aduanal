@@ -2,592 +2,498 @@
  * Single source of truth for every string rendered by the site.
  *
  * The site is published in Spanish only: components read their strings from
- * `useCopy()`, which returns this object.
+ * `useCopy()`, which returns this object. Content follows the client's own
+ * company presentation (`cliente/Presentación 1_compressed (1).pdf`).
  */
 
 export const unsplash = (id: string, w: number, h: number) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
 
 export const CONTACT = {
-  whatsapp: 'https://wa.me/523311940399',
-  whatsappLabel: '+52 33 1194 0399',
-  phoneHref: 'tel:+523311940399',
-  email: 'contacto@aduanex.mx',
-  city: 'Guadalajara, Jalisco, México',
-  coverage: 'Operaciones en aduanas estratégicas del país',
-  hours: 'Lunes a viernes, 9:00 – 18:00 h',
+  whatsapp: 'https://wa.me/524421160464',
+  whatsappLabel: '+52 442 116 0464',
+  phoneHref: 'tel:+524421160464',
+  email: 'infomx@andeus.mx',
+  address: 'Blvd. Centro Sur No. 3000, Col. Centro Sur',
+  addressCity: 'Querétaro, Qro. C.P. 76090',
+  coverage: 'Agencia aduanal en 10 plazas',
+  /** Google Maps embed for the office, as provided by the client. */
+  mapEmbed:
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d933.865202430603!2d-100.3668988191129!3d20.569230879799743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d344bdd9b48bdb%3A0x9d8da6b170495c2f!2sBlvd.%20Centro%20Sur%203000%2C%20Centro%20Sur%2C%2076093%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1791325347436!5m2!1ses!2smx',
 } as const
 
 /** Headline fragment where the middle words are set in the brand gold. */
 export type Accented = { lead: string; accent: string; tail: string }
 
+/** Plazas where the customs brokerage and trading company operates. */
+const CUSTOMS_POINTS = [
+  'Nuevo Laredo',
+  'Manzanillo',
+  'Veracruz',
+  'Querétaro',
+  'CDMX',
+  'Lázaro Cárdenas',
+  'Altamira',
+  'Laredo',
+  'Guadalajara',
+  'Monterrey',
+]
+
 export const es = {
   brand: {
-    name: 'ADUANEX',
-    descriptor: 'Agencia Aduanal',
-    legal: 'ADUANEX Agencia Aduanal',
-    tagline: 'Conectamos tu negocio con el mundo.',
+    name: 'ANDEUS',
+    descriptor: 'Group',
+    legal: 'Andeus Group',
+    tagline: 'Estrategia, servicio personalizado y calidad en cada operación.',
   },
 
   nav: {
     items: [
       { to: '/', label: 'Inicio' },
       { to: '/servicios', label: 'Servicios' },
-      { to: '/industrias', label: 'Industrias' },
       { to: '/nosotros', label: 'Nosotros' },
       { to: '/contacto', label: 'Contacto' },
     ],
-    cta: 'Cotizar operación',
+    cta: 'Solicitar asesoría',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',
   },
 
   common: {
-    quote: 'Cotizar operación',
-    quoteLong: 'Cotiza tu operación',
+    quote: 'Solicitar asesoría',
+    quoteLong: 'Solicita una asesoría',
     services: 'Conoce nuestros servicios',
-    viewIndustries: 'Ver todas las industrias',
-    viewIndustry: 'Ver sector',
     whatsapp: 'Hablar por WhatsApp',
     whatsappAria: 'Escríbenos por WhatsApp',
-    close: 'Cerrar',
+    contactForm: 'Ver datos de contacto',
     includes: 'Qué incluye',
-    appliesTo: 'Aplica en',
-    considerations: 'Puntos de atención',
-    sector: 'Sector',
+    appliesTo: 'Agencia aduanal y comercializadora en',
   },
 
   home: {
-    heroEyebrow: 'Agencia aduanal · Comercio exterior en México',
+    heroEyebrow: 'Consultoría en comercio exterior · Querétaro',
     heroTitle: {
-      lead: 'Soluciones aduanales que impulsan tu ',
-      accent: 'comercio internacional',
+      lead: 'Soluciones integrales de ',
+      accent: 'logística, transporte y comercio exterior',
       tail: '.',
     } as Accented,
     heroSubtitle:
-      'Despacho aduanal, logística y asesoría en comercio exterior con la precisión que tu negocio necesita.',
+      'Consultores especializados que garantizan el cumplimiento del marco jurídico aduanero de tus operaciones, con un servicio de estrategia, personalizado y de calidad.',
     heroImageAlt: 'Buque portacontenedores en maniobra junto a las grúas de una terminal portuaria',
     heroFacts: [
-      { label: 'Operación', value: 'Importación y exportación' },
-      { label: 'Cobertura', value: 'Aduanas estratégicas' },
-      { label: 'Enfoque', value: 'Cumplimiento y trazabilidad' },
+      { label: 'Servicios', value: 'Consultoría, auditoría y certificación' },
+      { label: 'Cobertura', value: 'Agencia aduanal en 10 plazas' },
+      { label: 'Sede', value: 'Querétaro, México' },
     ],
 
-    valuesEyebrow: '01 — Por qué ADUANEX',
-    valuesTitle: 'Razones para operar con nosotros',
+    valuesEyebrow: '01 — Por qué Andeus',
+    valuesTitle: 'Razones para trabajar con nosotros',
     valuesLead:
-      'Cuatro criterios que sostienen cada operación que ponemos en marcha, sin importar su tamaño.',
+      'La experiencia de un equipo altamente especializado, alineada a las necesidades de cada empresa.',
 
     servicesEyebrow: '02 — Servicios',
-    servicesTitle: 'Servicios para simplificar tu comercio exterior',
+    servicesTitle: 'Soluciones integrales para tu comercio exterior',
     servicesLead:
-      'Integramos servicios aduanales, logísticos y de consultoría para que tu mercancía llegue a donde necesita estar.',
+      'Consultoría, capacitación, auditoría, certificación, trámites y logística a través de nuestros consultores altamente capacitados.',
     servicesCta: 'Ver todos los servicios',
 
     processEyebrow: '03 — Proceso',
-    processTitle: 'De tu operación al destino, paso a paso.',
+    processTitle: 'Una estrategia a la medida de tu empresa.',
     processLead:
-      'Un método claro que mantiene la documentación, los tiempos y la comunicación bajo control.',
+      'Cada servicio parte de las necesidades de tu operación y del marco jurídico que le aplica.',
 
-    industriesEyebrow: '04 — Industrias',
-    industriesTitle: 'Experiencia en diferentes industrias',
-    industriesLead: 'Entendemos que cada sector tiene necesidades y desafíos diferentes.',
+    clientsEyebrow: '04 — Clientes',
+    clientsTitle: 'Empresas que confían en nosotros',
 
     coverageEyebrow: '05 — Cobertura',
     coverageTitle: {
-      lead: 'Conectamos operaciones con los ',
-      accent: 'principales puntos de entrada y salida',
+      lead: 'Agencia aduanal y comercializadora en ',
+      accent: 'diez plazas estratégicas',
       tail: '.',
     } as Accented,
     coverageLead:
-      'Trabajamos mediante una red estratégica de cobertura para facilitar operaciones de comercio exterior en México.',
+      'Operamos en los principales puertos, fronteras y aduanas interiores para conectar tu mercancía con su destino.',
     coverageNote:
-      'El punto de despacho se define según el origen, el destino y el tipo de mercancía de cada operación.',
+      'Transporte aéreo, marítimo y terrestre, almacenaje, consolidación y seguro de mercancía como parte del mismo servicio.',
 
-    statementEyebrow: '06 — Nuestra postura',
+    statementEyebrow: '06 — Nuestra propuesta',
     statementTitle: {
-      lead: 'Más que un trámite, somos tu ',
-      accent: 'aliado estratégico',
+      lead: 'Soluciones integrales a través de consultores ',
+      accent: 'altamente capacitados',
       tail: '.',
     } as Accented,
     statementLead:
-      'Nuestro objetivo es ayudarte a operar tu comercio exterior con mayor claridad, control y confianza.',
+      'Brindamos a tu empresa servicios personalizados, con base en la experiencia de nuestro equipo y alineados a sus necesidades.',
     statementPillars: [
-      { title: 'Claridad', text: 'Sabes en qué etapa está tu operación y qué sigue en cada momento.' },
-      { title: 'Control', text: 'Documentación, tiempos y costos revisados antes de que sean un problema.' },
-      { title: 'Confianza', text: 'Un criterio sustentado detrás de cada decisión que tomamos contigo.' },
+      { title: 'Estrategia', text: 'Asesoría pensada para la operación y los objetivos de tu empresa.' },
+      { title: 'Personalización', text: 'Un servicio alineado a las necesidades específicas de cada cliente.' },
+      { title: 'Calidad', text: 'Un equipo altamente especializado detrás de cada servicio.' },
     ],
 
-    ctaTitle: '¿Tienes una operación en puerta?',
-    ctaLead:
-      'Cuéntanos qué necesitas y te ayudaremos a identificar la mejor forma de llevarla a cabo.',
-    ctaPrimary: 'Cotizar mi operación',
+    ctaTitle: '¿Tu empresa necesita asesoría en comercio exterior?',
+    ctaLead: 'Cuéntanos sobre tu operación y te ayudamos a definir la estrategia adecuada.',
+    ctaPrimary: 'Solicitar asesoría',
   },
 
   /** Trust block on the home page and the dark value block on Nosotros. */
   values: [
     {
-      id: 'experiencia',
-      title: 'Experiencia',
-      text: 'Conocimiento especializado para gestionar operaciones de comercio exterior.',
-    },
-    {
-      id: 'precision',
-      title: 'Precisión',
-      text: 'Procesos cuidadosamente coordinados para reducir errores y retrasos.',
+      id: 'especialistas',
+      image: '1521737604893-d14cc237f11d',
+      title: 'Consultores especializados',
+      text: 'Un equipo altamente capacitado en logística, transporte y comercio exterior.',
     },
     {
       id: 'cumplimiento',
-      title: 'Cumplimiento',
-      text: 'Operaciones alineadas con las disposiciones y regulaciones aplicables.',
+      image: '1589829545856-d10d557cf95f',
+      title: 'Cumplimiento jurídico',
+      text: 'Garantizamos el cumplimiento del marco jurídico en materia aduanera de tus operaciones.',
     },
     {
-      id: 'atencion',
-      title: 'Atención personalizada',
-      text: 'Acompañamiento cercano durante cada etapa de tu operación.',
+      id: 'prevencion',
+      image: '1551288049-bebda4e38f71',
+      title: 'Prevención de riesgos',
+      text: 'Alertas oportunas para reducir o eliminar los riesgos fiscales de tu empresa.',
+    },
+    {
+      id: 'integral',
+      image: '1605745341112-85968b19335b',
+      title: 'Soluciones integrales',
+      text: 'Consultoría, auditoría, certificación, trámites y logística en un mismo despacho.',
     },
   ],
 
   process: [
     {
       step: '01',
-      title: 'Analizamos',
-      text: 'Conocemos tu mercancía, origen, destino y necesidades específicas.',
+      title: 'Diagnóstico',
+      text: 'Conocemos la operación de tu empresa y el marco jurídico que le aplica.',
     },
     {
       step: '02',
-      title: 'Planeamos',
-      text: 'Definimos la estrategia aduanal y logística adecuada para tu operación.',
+      title: 'Estrategia',
+      text: 'Nuestros consultores definen la solución adecuada a tus necesidades.',
     },
     {
       step: '03',
-      title: 'Gestionamos',
-      text: 'Coordinamos documentación, despacho y los procesos necesarios.',
+      title: 'Ejecución',
+      text: 'Gestionamos trámites, certificaciones, auditorías y operaciones de comercio exterior.',
     },
     {
       step: '04',
-      title: 'Damos seguimiento',
-      text: 'Acompañamos la operación para mantener el control durante todo el proceso.',
+      title: 'Seguimiento',
+      text: 'Acompañamos a tu empresa para mantener un cumplimiento legal oportuno.',
     },
   ],
 
   /** Entry and exit points we coordinate operations through. */
   customs: [
-    {
-      name: 'Nuevo Laredo',
-      type: 'Frontera norte',
-      note: 'Cruce terrestre con alto flujo de carga hacia y desde Estados Unidos.',
-    },
-    {
-      name: 'Manzanillo',
-      type: 'Puerto · Pacífico',
-      note: 'Terminal de contenedores conectada con los mercados de Asia.',
-    },
-    {
-      name: 'Veracruz',
-      type: 'Puerto · Golfo',
-      note: 'Punto de entrada marítima con conexión a Europa y Sudamérica.',
-    },
-    {
-      name: 'Altamira',
-      type: 'Puerto · Golfo',
-      note: 'Manejo de carga industrial, granel y proyectos de gran volumen.',
-    },
-    {
-      name: 'AICM',
-      type: 'Carga aérea',
-      note: 'Aeropuerto Internacional de la Ciudad de México para embarques aéreos.',
-    },
+    { name: 'Nuevo Laredo', type: 'Frontera norte' },
+    { name: 'Manzanillo', type: 'Puerto · Pacífico' },
+    { name: 'Veracruz', type: 'Puerto · Golfo' },
+    { name: 'Querétaro', type: 'Aduana interior' },
+    { name: 'CDMX', type: 'Aduana interior' },
+    { name: 'Lázaro Cárdenas', type: 'Puerto · Pacífico' },
+    { name: 'Altamira', type: 'Puerto · Golfo' },
+    { name: 'Laredo', type: 'Frontera norte' },
+    { name: 'Guadalajara', type: 'Aduana interior' },
+    { name: 'Monterrey', type: 'Aduana interior' },
   ],
+
+  /** Companies listed in the client's presentation. `logo` is a path under `public/`. */
+  clients: [
+    { name: 'IAS Automation' },
+    { name: 'Alfa de Occidente' },
+    { name: 'Zimmer Group' },
+    { name: 'Mosco & Co' },
+    { name: 'OTB' },
+    { name: 'Balluff' },
+  ] as { name: string; logo?: string }[],
 
   servicesPage: {
     eyebrow: 'Servicios',
-    title: 'Servicios aduanales, logísticos y de consultoría',
+    title: 'Consultoría, auditoría, certificación y logística',
     lead:
-      'Seis líneas de servicio que cubren el ciclo completo de una operación: desde la revisión documental previa hasta la entrega de la mercancía en su destino.',
+      'Seis líneas de servicio con consultores altamente capacitados, para que tu empresa opere su comercio exterior con estrategia y cumplimiento.',
     heroImageAlt: 'Vista aérea de una terminal de contenedores con grúas de patio',
     indexTitle: 'Índice de servicios',
-    ctaTitle: '¿Tu operación combina varios servicios?',
+    ctaTitle: '¿Tu empresa necesita más de un servicio?',
     ctaLead:
-      'La mayoría de las operaciones integran despacho, transporte y asesoría. Cuéntanos el caso y lo revisamos contigo.',
+      'Nuestras soluciones son integrales. Cuéntanos tu caso y armamos contigo la estrategia completa.',
   },
 
   services: [
     {
-      id: 'despacho-aduanal',
-      title: 'Despacho Aduanal',
-      short:
-        'Gestión integral de operaciones de importación y exportación, desde la documentación hasta el despacho de mercancías.',
-      description:
-        'Coordinamos el despacho de principio a fin: revisión de la documentación del embarque, validación de datos, elaboración del pedimento, atención del reconocimiento aduanero y liberación de la mercancía. Cada operación se trabaja con la información del cliente y con los terceros que intervienen en ella.',
-      includes: [
-        'Revisión documental previa al arribo del embarque',
-        'Elaboración y presentación del pedimento',
-        'Atención y seguimiento del reconocimiento aduanero',
-        'Coordinación de la liberación y salida de la mercancía',
-      ],
-      appliesTo: ['Importación', 'Exportación', 'Carga marítima', 'Carga terrestre'],
-      image: '1450101499163-c8848c66ca85',
-      imageAlt: 'Persona revisando y firmando la documentación de una operación de comercio exterior',
-    },
-    {
-      id: 'logistica-internacional',
-      title: 'Logística Internacional',
-      short:
-        'Coordinación de transporte y logística para conectar tus operaciones con diferentes mercados.',
-      description:
-        'Planeamos el movimiento de la mercancía entre el origen y el destino: transporte, maniobras, consolidación, almacenaje y entrega final. La ruta y el modo de transporte se definen según el tipo de mercancía, los tiempos del cliente y el punto de despacho seleccionado.',
-      includes: [
-        'Transporte terrestre nacional y transfronterizo',
-        'Maniobras de carga, descarga y consolidación',
-        'Almacenaje temporal y control documental del inventario',
-        'Programación de citas y entregas en destino',
-      ],
-      appliesTo: ['Carga completa', 'Carga consolidada', 'Cruce fronterizo', 'Entrega en planta'],
-      image: '1519003722824-194d4455a60c',
-      imageAlt: 'Camión de carga circulando por una carretera hacia el punto de destino',
-    },
-    {
-      id: 'clasificacion-arancelaria',
-      title: 'Clasificación Arancelaria',
-      short:
-        'Análisis de mercancías para determinar su correcta clasificación y facilitar el cumplimiento de las disposiciones aplicables.',
-      description:
-        'Analizamos la naturaleza, composición y uso de la mercancía para sustentar la fracción arancelaria que le corresponde. Un criterio bien documentado reduce el riesgo de diferencias, sanciones y demoras durante el despacho.',
-      includes: [
-        'Estudio técnico de la mercancía y su documentación',
-        'Propuesta de fracción arancelaria y NICO sustentada',
-        'Identificación de regulaciones y restricciones no arancelarias',
-        'Homologación del catálogo de productos de la empresa',
-      ],
-      appliesTo: ['Materias primas', 'Componentes', 'Producto terminado', 'Maquinaria'],
-      image: '1554224155-6726b3ff858f',
-      imageAlt: 'Escritorio con documentos, calculadora y análisis de costos de una operación',
-    },
-    {
-      id: 'padrones-regulaciones',
-      title: 'Padrones y Regulaciones',
-      short:
-        'Asesoría y gestión relacionada con padrones, permisos y regulaciones necesarias para tus operaciones.',
-      description:
-        'Acompañamos a la empresa en los requisitos previos a la operación: inscripción y actualización en padrones, permisos, avisos y normas aplicables a la mercancía. Revisar estos puntos antes del embarque evita que la carga quede detenida en la aduana.',
-      includes: [
-        'Inscripción y actualización en el padrón de importadores',
-        'Gestión de padrones sectoriales según la mercancía',
-        'Trámite de permisos previos y avisos aplicables',
-        'Revisión de normas oficiales mexicanas y etiquetado',
-      ],
-      appliesTo: ['Padrón de importadores', 'Padrones sectoriales', 'Permisos previos', 'Etiquetado'],
-      image: '1586281380349-632531db7ed4',
-      imageAlt: 'Expediente y lista de verificación de requisitos sobre un escritorio de trabajo',
-    },
-    {
-      id: 'freight-forwarding',
-      title: 'Freight Forwarding',
-      short:
-        'Coordinación de embarques marítimos, aéreos y terrestres de acuerdo con las necesidades de cada operación.',
-      description:
-        'Gestionamos la contratación y el seguimiento del flete internacional en sus distintos modos. Comparamos alternativas de ruta, tiempo de tránsito y costo, y damos seguimiento al embarque desde su recolección en origen hasta la llegada al punto de despacho.',
-      includes: [
-        'Cotización y contratación de flete marítimo, aéreo y terrestre',
-        'Coordinación de recolección y documentación en origen',
-        'Seguimiento del embarque y actualización de estatus',
-        'Apoyo en la contratación del seguro de carga',
-      ],
-      appliesTo: ['Marítimo', 'Aéreo', 'Terrestre', 'Multimodal'],
-      image: '1569154941061-e231b4725ef1',
-      imageAlt: 'Avión de carga en la pista de un aeropuerto internacional',
-    },
-    {
       id: 'consultoria',
-      title: 'Consultoría en Comercio Exterior',
+      title: 'Consultoría',
       short:
-        'Asesoría estratégica para planear, optimizar y ejecutar operaciones de comercio internacional.',
+        'Asesoría de estrategia conforme a las necesidades de tu empresa en materia aduanera, fiscal y legal.',
       description:
-        'Revisamos la operación de comercio exterior de la empresa para identificar oportunidades de mejora: estructura documental, criterios de clasificación, aprovechamiento de tratados y programas de fomento, y controles internos que sostienen el cumplimiento a lo largo del tiempo.',
+        'Nuestros consultores especializados brindan asesoría de estrategia conforme a las necesidades de su empresa en los temas que impactan su operación de comercio exterior.',
       includes: [
-        'Diagnóstico de la operación de comercio exterior',
-        'Análisis de tratados comerciales y reglas de origen',
-        'Revisión de programas de fomento aplicables a la empresa',
-        'Definición de controles internos y expediente documental',
+        'Empresas IMMEX, PROSEC y Regla 8va',
+        'Administración y reconstrucción de Anexo 24 y Anexo 31',
+        'Certificación en materia de IVA e IEPS',
+        'Despacho aduanero y operaciones de importación y exportación',
+        'Cumplimiento de regulaciones y restricciones no arancelarias',
+        'Estudios y reglas de origen',
+        'Clasificación arancelaria',
+        'Asesoría legal corporativa y mercantil',
+        'Propiedad intelectual',
       ],
-      appliesTo: ['Planeación', 'Cumplimiento', 'Costos', 'Auditoría interna'],
       image: '1600880292203-757bb62b4baf',
-      imageAlt: 'Equipo de trabajo revisando la estrategia de una operación de comercio exterior',
+      imageAlt: 'Equipo de consultores revisando la estrategia de una empresa',
     },
-  ],
-
-  industriesPage: {
-    eyebrow: 'Industrias',
-    title: 'Cada sector opera de una forma distinta',
-    lead:
-      'La mercancía, las regulaciones y los tiempos cambian de una industria a otra. Conocer esas diferencias es lo que permite anticipar los puntos críticos de cada operación.',
-    heroImageAlt: 'Línea de producción automatizada dentro de una planta de manufactura',
-    ctaTitle: '¿Tu sector no aparece en la lista?',
-    ctaLead:
-      'Trabajamos con mercancías de distintos giros. Cuéntanos qué necesitas mover y revisamos los requisitos que aplican a tu caso.',
-  },
-
-  industries: [
     {
-      id: 'automotriz',
-      name: 'Automotriz',
-      short: 'Autopartes, componentes y equipo para líneas de producción.',
+      id: 'capacitacion',
+      title: 'Capacitación',
+      short:
+        'Capacitación para fortalecer las competencias de tu equipo y mantenerlo actualizado.',
       description:
-        'Operaciones de proveeduría automotriz donde el tiempo de entrega y la trazabilidad documental son determinantes: componentes, autopartes, herramentales y equipo para planta.',
-      points: [
-        'Embarques recurrentes con programas de entrega definidos',
-        'Clasificación de componentes, herramentales y refacciones',
-        'Coordinación con plantas y proveedores de primer y segundo nivel',
+        'Brindamos capacitación enfocada en fortalecer las competencias de nuestros clientes y en su actualización en los temas que impactan su operación. Nuestro modelo, basado en conceptos jurídico-empresariales, facilita su aplicación en la operatividad de su empresa para el cumplimiento legal oportuno.',
+      includes: [
+        'Materia aduanera y de comercio exterior',
+        'Materia legal corporativa y mercantil',
+        'Materia fiscal y contable',
+        'Protección de datos',
+        'Propiedad intelectual',
       ],
-      image: '1565043666747-69f6646db940',
-      imageAlt: 'Fila de automóviles nuevos listos para su distribución',
+      image: '1552664730-d307ca884978',
+      imageAlt: 'Sesión de capacitación con un equipo de trabajo frente a una presentación',
     },
     {
-      id: 'manufactura',
-      name: 'Manufactura',
-      short: 'Insumos, materias primas y producto terminado.',
+      id: 'auditoria',
+      title: 'Auditoría de Comercio Exterior, Legal y Corporativa',
+      short:
+        'Auditorías preventivas para emitir alertas oportunas y reducir o eliminar riesgos fiscales.',
       description:
-        'Empresas que importan insumos y exportan producto terminado, con necesidades de control documental y continuidad en el abasto de sus líneas.',
-      points: [
-        'Importación de materias primas e insumos de proceso',
-        'Exportación de producto terminado',
-        'Operaciones vinculadas a programas de fomento',
+        'Contamos con un área especializada en auditorías preventivas con el fin de realizar alertas oportunas y encontrar áreas de oportunidad para la reducción y/o eliminación total de riesgos fiscales para su empresa.',
+      includes: [
+        'Materia aduanera y de comercio exterior',
+        'Auditoría electrónica de operaciones de comercio exterior',
+        'Auditoría de activo fijo (comprobar la legal estancia y/o tenencia de bienes)',
+        'Auditoría de cumplimiento de Certificación IVA e IEPS',
+        'Auditoría de cumplimiento OEA',
+        'Auditoría de Anexo 24',
+        'Auditoría legal corporativa y mercantil',
+      ],
+      image: '1554224155-6726b3ff858f',
+      imageAlt: 'Escritorio con documentos y análisis de una auditoría',
+    },
+    {
+      id: 'certificacion-nom',
+      title: 'Certificación NOM',
+      short:
+        'Inspección, pruebas y evaluación para comprobar que tu producto cumple la normatividad aplicable.',
+      description:
+        'Nuestros técnicos realizan servicios de inspección ocular, muestreo, pruebas, investigación de campo y evaluación, comprobando el cumplimiento de la normatividad nacional e internacional para proporcionar seguridad al consumidor y cuidado del medio ambiente respecto de un producto.',
+      includes: [
+        'Verificación, análisis y pruebas de laboratorio',
+        'Cartas de justificación técnica',
+        'Creación de diagramas y etiquetado',
+        'Certificación y renovación NOM',
+        'Traducción de manuales y fichas técnicas',
+        'Trámite de folios SOL',
       ],
       image: '1581091226825-a6a2a5aee158',
-      imageAlt: 'Técnica supervisando un proceso de manufactura en planta',
+      imageAlt: 'Técnica inspeccionando un proceso de producción en planta',
     },
     {
-      id: 'electronica',
-      name: 'Electrónica',
-      short: 'Componentes y dispositivos de alto valor y rotación.',
+      id: 'tramites-certificaciones',
+      title: 'Trámites y Certificaciones',
+      short: 'Gestión de padrones, certificaciones, permisos y avisos de comercio exterior.',
       description:
-        'Mercancía de ciclo de vida corto y valor elevado, donde la clasificación y las regulaciones técnicas requieren una revisión detallada antes de cada embarque.',
-      points: [
-        'Clasificación de componentes y equipo terminado',
-        'Regulaciones técnicas y requisitos de etiquetado',
-        'Embarques aéreos cuando el tiempo es crítico',
+        'Como parte de nuestros servicios integrales de consultoría y comercio exterior, te apoyamos en la gestoría de trámites y certificaciones en la materia.',
+      includes: [
+        'Padrón de importadores y sectoriales de importación y exportación',
+        'Certificación en materia de IVA e IEPS, IMMEX/PROSEC',
+        'Permisos COFEPRIS',
+        'Regla 2a / Regla 8va',
+        'Certificado de elegibilidad / Certificado de origen',
+        'OEA / C-TPAT',
+        'Avisos automáticos de importación / exportación',
       ],
-      image: '1518770660439-4636190af475',
-      imageAlt: 'Placa de circuito impreso con componentes electrónicos',
+      image: '1450101499163-c8848c66ca85',
+      imageAlt: 'Persona revisando y firmando la documentación de un trámite',
     },
     {
-      id: 'alimentos-bebidas',
-      name: 'Alimentos y bebidas',
-      short: 'Productos con requisitos sanitarios y tiempos sensibles.',
+      id: 'logistica-transporte',
+      title: 'Logística y Transporte',
+      short:
+        'Transporte nacional e internacional, almacenaje y despacho aduanal en diez plazas del país.',
       description:
-        'Operaciones que exigen atención a requisitos sanitarios, etiquetado y condiciones de transporte para preservar la mercancía durante todo el trayecto.',
-      points: [
-        'Revisión de requisitos sanitarios y de etiquetado',
-        'Transporte con control de temperatura',
-        'Certificados de origen y documentación de respaldo',
+        'Como parte de nuestros servicios integrales de consultoría y comercio exterior, coordinamos la logística y el transporte nacional e internacional de tu mercancía, incluido el despacho a través de nuestra agencia aduanal y comercializadora.',
+      includes: [
+        'Transporte aéreo, marítimo y terrestre',
+        'Almacenaje y distribución',
+        'Consolidación y desconsolidación',
+        'Seguro de mercancía',
+        'Agencia aduanal y comercializadora',
       ],
-      image: '1543168256-418811576931',
-      imageAlt: 'Productos alimenticios empacados listos para su distribución',
+      appliesTo: CUSTOMS_POINTS,
+      image: '1494412651409-8963ce7935a7',
+      imageAlt: 'Vista aérea de una terminal de contenedores con grúas y patios de carga',
     },
-    {
-      id: 'maquinaria',
-      name: 'Maquinaria',
-      short: 'Equipo industrial, líneas completas y refacciones.',
-      description:
-        'Importación de maquinaria y equipo, incluyendo embarques de dimensiones especiales y proyectos que terminan con la instalación dentro de planta.',
-      points: [
-        'Carga de dimensiones y peso especiales',
-        'Clasificación de equipo, partes y refacciones',
-        'Coordinación de maniobras y entrega en planta',
-      ],
-      image: '1580901368919-7738efb0f87e',
-      imageAlt: 'Maquinaria pesada en un sitio de trabajo industrial',
-    },
-    {
-      id: 'siderurgia',
-      name: 'Siderurgia',
-      short: 'Acero y metales con regulaciones específicas.',
-      description:
-        'Mercancía sujeta a regulaciones particulares y requisitos documentales que deben revisarse con anticipación para no comprometer el despacho.',
-      points: [
-        'Revisión de permisos y avisos aplicables al acero',
-        'Manejo de carga a granel y de gran volumen',
-        'Documentación de origen y certificados de calidad',
-      ],
-      image: '1757266705809-22af172a3b26',
-      imageAlt: 'Instalación siderúrgica con hornos y estructuras metálicas',
-    },
-    {
-      id: 'tecnologia',
-      name: 'Tecnología',
-      short: 'Cómputo, telecomunicaciones e infraestructura digital.',
-      description:
-        'Embarques de equipo y componentes que combinan alto valor, garantías del fabricante y regulaciones técnicas aplicables a su comercialización.',
-      points: [
-        'Clasificación de equipo, accesorios y consumibles',
-        'Homologaciones y regulaciones técnicas aplicables',
-        'Operaciones de reparación, garantía y retorno',
-      ],
-      image: '1558494949-ef010cbdcc31',
-      imageAlt: 'Racks de servidores dentro de un centro de datos',
-    },
-    {
-      id: 'mobiliario',
-      name: 'Mobiliario',
-      short: 'Muebles, acabados y artículos para proyecto.',
-      description:
-        'Carga voluminosa que requiere planeación de espacio, consolidación y cuidado en el manejo desde el origen hasta la entrega final.',
-      points: [
-        'Consolidación de carga voluminosa',
-        'Requisitos de etiquetado comercial',
-        'Entregas programadas por etapa de proyecto',
-      ],
-      image: '1524758631624-e2822e304c36',
-      imageAlt: 'Interior con mobiliario y acabados listos para entrega',
-    },
-    {
-      id: 'retail',
-      name: 'Retail',
-      short: 'Bienes de consumo con temporadas y volúmenes variables.',
-      description:
-        'Operaciones con picos de temporada, donde la planeación anticipada evita costos de almacenaje y llegadas fuera de tiempo al punto de venta.',
-      points: [
-        'Planeación de temporadas y picos de volumen',
-        'Etiquetado comercial y normas aplicables',
-        'Manejo de múltiples proveedores en un mismo embarque',
-      ],
-      image: '1441986300917-64674bd600d8',
-      imageAlt: 'Interior de una tienda con mercancía en exhibición',
-    },
-  ],
+  ] as {
+    id: string
+    title: string
+    short: string
+    description: string
+    includes: string[]
+    appliesTo?: string[]
+    image: string
+    imageAlt: string
+  }[],
 
   aboutPage: {
     eyebrow: 'Nosotros',
-    title: 'Una agencia aduanal enfocada en la operación de su cliente',
+    title: 'Un despacho de consultores especializados en comercio exterior',
     lead:
-      'ADUANEX acompaña a empresas mexicanas en sus operaciones de importación y exportación, con un enfoque en el cumplimiento, la trazabilidad documental y la comunicación directa.',
-    heroImageAlt: 'Torres corporativas de un centro financiero internacional',
+      'Andeus Group brinda soluciones integrales de logística, transporte y comercio exterior a empresas que operan en México.',
+    heroImageAlt: 'Torres corporativas de un centro financiero',
 
     storyEyebrow: '01 — Quiénes somos',
-    storyTitle: 'Comercio exterior sin sorpresas',
+    storyTitle: 'Cumplimiento jurídico con visión estratégica',
     storyBody: [
-      'Una operación de comercio exterior se detiene por detalles: un dato que no coincide, un permiso que faltaba, una clasificación que nadie sustentó. Nuestro trabajo consiste en revisar esos detalles antes de que la mercancía llegue a la aduana.',
-      'Por eso trabajamos con un expediente ordenado desde el primer contacto: qué se mueve, de dónde viene, a dónde va y qué requisitos aplican. Con esa base definimos el punto de despacho, la ruta y los tiempos reales de la operación.',
-      'El resultado es una operación que el cliente puede seguir y explicar en su empresa, con un interlocutor que conoce el caso y responde con información concreta en cada etapa.',
+      'Somos un despacho de consultores especializados en brindar soluciones integrales de logística, transporte y comercio exterior. Garantizamos el cumplimiento del marco jurídico en materia aduanera de las operaciones de nuestros clientes con base en la experiencia de nuestro equipo altamente especializado.',
+      'Nuestra propuesta es brindar a su empresa soluciones integrales con servicios personalizados a través de nuestros consultores altamente capacitados: un servicio de estrategia, personalizado y de calidad, alineado a sus necesidades.',
+      'Nuestros servicios abarcan consultoría, capacitación, auditoría, certificación NOM, trámites y certificaciones, despacho aduanal, y logística y transporte nacional e internacional.',
     ],
     storyImageAlt: 'Dos personas revisando documentación de comercio exterior en una oficina',
 
-    missionTitle: 'Misión',
-    missionBody:
-      'Facilitar las operaciones de comercio exterior de nuestros clientes mediante un servicio aduanal preciso, documentado y apegado a las disposiciones aplicables.',
-    visionTitle: 'Visión',
-    visionBody:
-      'Ser la agencia aduanal de referencia para las empresas que buscan claridad y control en cada una de sus operaciones internacionales.',
+    valueBlockEyebrow: '02 — Compromiso',
+    valueBlockTitle: 'Lo que nos distingue',
 
-    valuesEyebrow: '02 — Valores',
-    valuesTitle: 'Lo que sostiene cada operación',
-    values: [
-      { title: 'Precisión', text: 'Los datos se revisan antes de presentarse, no después de una incidencia.' },
-      { title: 'Cumplimiento', text: 'Cada criterio que aplicamos se sustenta en la disposición que lo respalda.' },
-      { title: 'Transparencia', text: 'Costos, tiempos y riesgos se conversan de frente desde la cotización.' },
-      { title: 'Cercanía', text: 'Un interlocutor que conoce tu operación y da seguimiento a lo acordado.' },
-      { title: 'Confidencialidad', text: 'La información comercial del cliente se maneja con reserva.' },
-    ],
+    clientsEyebrow: '03 — Clientes',
 
-    focusEyebrow: '03 — Enfoque',
-    focusTitle: 'En qué ponemos atención',
-    focus: [
-      {
-        step: '01',
-        title: 'Cumplimiento normativo',
-        text: 'Revisamos que la operación se apegue a las disposiciones y requisitos aplicables a la mercancía.',
-      },
-      {
-        step: '02',
-        title: 'Trazabilidad documental',
-        text: 'Cada operación se sustenta en un expediente ordenado y disponible cuando se necesita.',
-      },
-      {
-        step: '03',
-        title: 'Coordinación logística',
-        text: 'Alineamos transporte, despacho y entrega para que una etapa no detenga a la siguiente.',
-      },
-      {
-        step: '04',
-        title: 'Comunicación directa',
-        text: 'Informamos avances y desviaciones a tiempo, con lenguaje claro y datos verificables.',
-      },
-    ],
-    focusImageAlts: [
-      'Buque de carga atracado en una terminal de contenedores',
-      'Almacén con mercancía organizada en racks para su distribución',
-    ],
+    processEyebrow: '04 — Proceso',
 
-    valueBlockEyebrow: '04 — Compromiso',
-    valueBlockTitle: 'Cuatro constantes en nuestro servicio',
-
-    processEyebrow: '05 — Proceso',
-
-    ctaTitle: 'Trabajemos en tu próxima operación',
+    ctaTitle: 'Trabajemos con tu empresa',
     ctaLead:
-      'Cuéntanos qué mercancía necesitas mover y revisamos contigo los requisitos, los tiempos y la mejor forma de ejecutarla.',
+      'Cuéntanos qué necesita tu operación de comercio exterior y definimos contigo la estrategia adecuada.',
   },
 
   contactPage: {
     eyebrow: 'Contacto',
-    title: 'Hablemos de tu operación',
+    title: 'Hablemos de tu empresa',
     lead:
-      'Cuéntanos qué necesitas mover, desde dónde y hacia dónde. Te ayudamos a identificar la mejor forma de llevarlo a cabo.',
+      'Cuéntanos qué necesita tu operación de comercio exterior y te ayudamos a definir la estrategia adecuada.',
     heroImageAlt: 'Almacén con mercancía organizada en racks, lista para su distribución',
-
-    formTitle: 'Cotizar operación',
-    formLead: 'Los campos marcados con asterisco son obligatorios.',
-    fields: {
-      name: 'Nombre',
-      company: 'Empresa',
-      email: 'Correo',
-      phone: 'Teléfono',
-      service: 'Servicio de interés',
-      servicePlaceholder: 'Selecciona una opción',
-      message: 'Mensaje',
-      messagePlaceholder:
-        'Describe la mercancía, el origen, el destino y la fecha estimada de la operación.',
-    },
-    submit: 'Enviar solicitud',
-    submitted: 'Recibimos tu solicitud. Te contactaremos para dar seguimiento.',
-    privacy:
-      'Al enviar aceptas que utilicemos tus datos únicamente para responder a esta solicitud.',
 
     infoTitle: 'Información de contacto',
     cards: [
-      { title: 'Cobertura', lines: [CONTACT.city, CONTACT.coverage] },
-      { title: 'WhatsApp', lines: [CONTACT.whatsappLabel, 'Atención directa para operaciones en curso'] },
-      { title: 'Correo electrónico', lines: [CONTACT.email, 'Respuesta en horario de oficina'] },
-      { title: 'Horario', lines: [CONTACT.hours, 'Seguimiento a embarques según su itinerario'] },
+      { title: 'Oficina', lines: [CONTACT.address, CONTACT.addressCity] },
+      { title: 'WhatsApp', lines: [CONTACT.whatsappLabel, 'Atención directa con nuestros consultores'] },
+      { title: 'Correo electrónico', lines: [CONTACT.email, 'Escríbenos con los detalles de tu operación'] },
+      { title: 'Cobertura', lines: [CONTACT.coverage, 'Puertos, fronteras y aduanas interiores'] },
     ],
-    mapTitle: 'Guadalajara, Jalisco',
-    mapNote: 'Coordinación de operaciones en aduanas marítimas, fronterizas y aéreas',
-    mapLabel: 'Ubicación de referencia',
+    mapTitle: 'Querétaro, Qro.',
+    mapNote: CONTACT.address,
+    mapLabel: 'Mapa de la oficina de Andeus Group en Querétaro',
     whatsappTitle: '¿Necesitas una respuesta rápida?',
-    whatsappLead:
-      'Si tu embarque ya está en tránsito o tienes una fecha de arribo cerca, escríbenos por WhatsApp.',
+    whatsappLead: 'Escríbenos por WhatsApp y uno de nuestros consultores te atenderá directamente.',
   },
 
   footer: {
     blurb:
-      'Agencia aduanal especializada en despacho, logística internacional y asesoría en comercio exterior para empresas que operan en México.',
+      'Despacho de consultores especializados en soluciones integrales de logística, transporte y comercio exterior.',
     navTitle: 'Navegación',
-    infoTitle: 'Información',
+    infoTitle: 'Servicios',
     socialTitle: 'Síguenos',
     info: [
-      { label: 'Agencia Aduanal', to: '/nosotros' },
-      { label: 'Comercio Exterior', to: '/servicios#consultoria' },
-      { label: 'Logística Internacional', to: '/servicios#logistica-internacional' },
-      { label: 'Cotizaciones', to: '/contacto' },
+      { label: 'Consultoría', to: '/servicios#consultoria' },
+      { label: 'Auditoría', to: '/servicios#auditoria' },
+      { label: 'Certificación NOM', to: '/servicios#certificacion-nom' },
+      { label: 'Logística y Transporte', to: '/servicios#logistica-transporte' },
     ],
     social: [
-      { label: 'LinkedIn', href: 'https://www.linkedin.com' },
-      { label: 'Facebook', href: 'https://www.facebook.com' },
-      { label: 'Instagram', href: 'https://www.instagram.com' },
+      { label: 'Instagram', href: 'https://www.instagram.com/andeus_group/' },
       { label: 'WhatsApp', href: CONTACT.whatsapp },
     ],
-    rights: '© 2026 ADUANEX Agencia Aduanal. Todos los derechos reservados.',
+    rights: '© 2026 Andeus Group. Todos los derechos reservados.',
+    privacy: { label: 'Aviso de privacidad', to: '/aviso-de-privacidad' },
+    credit: { label: 'Diseño y desarrollo', studio: 'Avalon Nova', href: 'https://avalonnova.com' },
+  },
+
+  privacyPage: {
+    eyebrow: 'Legal',
+    title: 'Aviso de privacidad',
+    lead: 'Cómo Andeus Group trata los datos personales de quienes nos contactan y de nuestros clientes.',
+    heroImageAlt: 'Persona revisando y firmando documentación en un escritorio',
+    updated: 'Última actualización: 6 de octubre de 2026',
+    sections: [
+      {
+        title: 'Responsable de tus datos personales',
+        body: [
+          `Andeus Group, con domicilio en ${CONTACT.address}, ${CONTACT.addressCity}, es responsable del uso y protección de tus datos personales, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares y demás normativa aplicable.`,
+          `Para cualquier asunto relacionado con este aviso, puedes escribirnos a ${CONTACT.email}.`,
+        ],
+      },
+      {
+        title: 'Datos personales que recabamos',
+        body: [
+          'Cuando nos contactas o contratas nuestros servicios podemos recabar los siguientes datos:',
+        ],
+        items: [
+          'Datos de identificación y contacto: nombre, teléfono y correo electrónico.',
+          'Datos laborales: empresa, puesto o cargo y domicilio de la empresa.',
+          'Información sobre las operaciones de comercio exterior que nos compartas para prestarte el servicio.',
+        ],
+        after: ['No solicitamos datos personales sensibles.'],
+      },
+      {
+        title: 'Cómo obtenemos tus datos',
+        body: [
+          'Obtenemos tus datos cuando nos los proporcionas directamente por WhatsApp, correo electrónico, teléfono o en persona. Este sitio web no cuenta con formularios y no recaba datos personales por sí mismo.',
+        ],
+      },
+      {
+        title: 'Finalidades del tratamiento',
+        body: ['Utilizamos tus datos para las siguientes finalidades, necesarias para el servicio que solicitas:'],
+        items: [
+          'Atender tus solicitudes de información y asesoría.',
+          'Elaborar propuestas y prestar los servicios contratados.',
+          'Dar seguimiento a tus operaciones y mantener comunicación contigo.',
+          'Facturar y cumplir las obligaciones legales, fiscales y aduaneras que correspondan.',
+        ],
+        after: [
+          'De manera adicional, podemos usar tus datos para enviarte información sobre nuestros servicios. Esta finalidad no es necesaria para la relación contigo; si no deseas que tus datos se usen para ello, indícalo escribiendo a nuestro correo.',
+        ],
+      },
+      {
+        title: 'Transferencias de datos',
+        body: [
+          'No vendemos ni compartimos tus datos personales con terceros para fines propios de ellos. Solo los compartimos cuando es necesario para prestar el servicio que solicitaste (por ejemplo, ante autoridades aduaneras y fiscales en un trámite o despacho) o cuando una ley o una autoridad competente lo requiera.',
+        ],
+      },
+      {
+        title: 'Derechos ARCO y revocación del consentimiento',
+        body: [
+          `Tienes derecho a acceder a tus datos personales, rectificarlos si son inexactos, cancelarlos u oponerte a su uso para fines específicos (derechos ARCO), así como a revocar el consentimiento que nos hayas otorgado. Para ejercerlos, envía tu solicitud a ${CONTACT.email} indicando:`,
+        ],
+        items: [
+          'Tu nombre y un medio para comunicarte la respuesta.',
+          'Un documento que acredite tu identidad o, en su caso, la de tu representante.',
+          'Una descripción clara de los datos y del derecho que deseas ejercer.',
+        ],
+        after: [
+          'Responderemos tu solicitud en los plazos que establece la ley. Ten en cuenta que, en algunos casos, no podremos cancelar tus datos de forma inmediata cuando una obligación legal nos exija conservarlos.',
+        ],
+      },
+      {
+        title: 'Cookies y servicios de terceros',
+        body: [
+          'Este sitio no utiliza cookies propias ni herramientas de analítica. La página de contacto muestra un mapa de Google Maps y el sitio incluye enlaces a WhatsApp e Instagram; al usarlos, esos servicios pueden recabar información conforme a sus propias políticas de privacidad.',
+        ],
+      },
+      {
+        title: 'Cambios a este aviso',
+        body: [
+          'Podemos actualizar este aviso de privacidad para reflejar cambios legales o en nuestros servicios. La versión vigente estará siempre disponible en esta página, con su fecha de última actualización.',
+          'Si consideras que tu derecho a la protección de datos personales ha sido vulnerado, puedes acudir ante la autoridad competente en la materia.',
+        ],
+      },
+    ] as { title: string; body: string[]; items?: string[]; after?: string[] }[],
   },
 
   notFound: {

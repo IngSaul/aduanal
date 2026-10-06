@@ -2,16 +2,17 @@ import { CONTACT, unsplash } from '../content/copy'
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
 import {
+  IconBriefcase,
   IconClipboardCheck,
   IconCompass,
   IconDocSeal,
-  IconScale,
-  IconShip,
+  IconShield,
   IconTruck,
 } from '../components/icons'
 import { Button, Eyebrow, Img, Reveal, Section, SectionTitle } from '../components/ui'
 
-const ICONS = [IconDocSeal, IconTruck, IconScale, IconClipboardCheck, IconShip, IconCompass]
+/** Order matches `copy.services`, and the icons used on the home page. */
+const ICONS = [IconCompass, IconBriefcase, IconClipboardCheck, IconShield, IconDocSeal, IconTruck]
 
 export default function Services() {
   const copy = useCopy()
@@ -25,11 +26,11 @@ export default function Services() {
         image="1494412574643-ff11b0a5c1c3"
         imageAlt={copy.servicesPage.heroImageAlt}
       >
-        <Button to="/contacto" variant="accent">
+        <Button href={CONTACT.whatsapp} variant="accent">
           {copy.common.quote}
         </Button>
-        <Button href={CONTACT.whatsapp} variant="onDark">
-          {copy.common.whatsapp}
+        <Button to="/contacto" variant="onDark">
+          {copy.common.contactForm}
         </Button>
       </PageHero>
 
@@ -106,22 +107,26 @@ export default function Services() {
                     ))}
                   </ul>
 
-                  <h3 className="mt-9 font-mono text-[10.5px] font-semibold tracking-[0.2em] text-navy uppercase">
-                    {copy.common.appliesTo}
-                  </h3>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {service.appliesTo.map((tag) => (
-                      <li
-                        key={tag}
-                        className="rounded-full border border-navy/15 px-4 py-1.5 text-[12px] font-medium tracking-[0.02em] text-steel"
-                      >
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
+                  {service.appliesTo ? (
+                    <>
+                      <h3 className="mt-9 font-mono text-[10.5px] font-semibold tracking-[0.2em] text-navy uppercase">
+                        {copy.common.appliesTo}
+                      </h3>
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {service.appliesTo.map((tag) => (
+                          <li
+                            key={tag}
+                            className="rounded-full border border-navy/15 px-4 py-1.5 text-[12px] font-medium tracking-[0.02em] text-steel"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : null}
 
                   <div className="mt-10">
-                    <Button to="/contacto">{copy.common.quote}</Button>
+                    <Button href={CONTACT.whatsapp}>{copy.common.quote}</Button>
                   </div>
                 </Reveal>
               </div>
@@ -137,11 +142,11 @@ export default function Services() {
           </Reveal>
           <Reveal delay={120}>
             <div className="flex flex-wrap gap-3 lg:justify-end">
-              <Button to="/contacto" variant="accent" size="lg">
+              <Button href={CONTACT.whatsapp} variant="accent" size="lg">
                 {copy.common.quote}
               </Button>
-              <Button to="/industrias" variant="onDark" size="lg">
-                {copy.common.viewIndustries}
+              <Button to="/contacto" variant="onDark" size="lg">
+                {copy.common.contactForm}
               </Button>
             </div>
           </Reveal>

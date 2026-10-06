@@ -89,8 +89,10 @@ export default function Navbar() {
               <IconWhatsApp className="h-5 w-5" />
             </a>
 
-            <Link
-              to="/contacto"
+            <a
+              href={CONTACT.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
               className={[
                 'hidden h-10 items-center rounded-[10px] px-5 text-[12px] font-semibold tracking-[0.11em] uppercase transition-all duration-300 md:inline-flex',
                 solid
@@ -99,7 +101,7 @@ export default function Navbar() {
               ].join(' ')}
             >
               {copy.nav.cta}
-            </Link>
+            </a>
 
             <button
               type="button"
@@ -143,20 +145,14 @@ export default function Navbar() {
           ))}
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link
-              to="/contacto"
-              className="inline-flex h-12 shrink-0 items-center justify-center rounded-[10px] bg-gold sm:flex-1 px-5 text-[12px] font-semibold tracking-[0.11em] text-navy uppercase transition-colors hover:bg-gold-600 hover:text-white"
-            >
-              {copy.nav.cta}
-            </Link>
             <a
               href={CONTACT.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 shrink-0 items-center justify-center gap-2.5 rounded-[10px] border sm:flex-1 border-navy/20 px-5 text-[12px] font-semibold tracking-[0.11em] text-navy uppercase transition-colors hover:border-navy hover:bg-navy hover:text-white"
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2.5 rounded-[10px] bg-gold sm:flex-1 px-5 text-[12px] font-semibold tracking-[0.11em] text-navy uppercase transition-colors hover:bg-gold-600 hover:text-white"
             >
               <IconWhatsApp className="h-4.5 w-4.5" />
-              {copy.common.whatsapp}
+              {copy.nav.cta}
             </a>
           </div>
         </div>

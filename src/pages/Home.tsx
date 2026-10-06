@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react'
 import { CONTACT, unsplash } from '../content/copy'
 import { useCopy } from '../i18n'
-import { FeatureCard, IndustryCard, Timeline, ValueCard, type IndustryLike } from '../components/cards'
-import IndustryModal from '../components/IndustryModal'
+import { ClientGrid, FeatureCard, Timeline } from '../components/cards'
 import {
   IconBriefcase,
-  IconChat,
   IconClipboardCheck,
   IconCompass,
   IconDocSeal,
-  IconScale,
   IconShield,
-  IconShip,
   IconTarget,
   IconTruck,
 } from '../components/icons'
@@ -20,22 +16,21 @@ import { Button, Eyebrow, Highlight, Img, Reveal, Section, SectionTitle } from '
 const HERO_IMAGE = '1578575437130-527eed3abbec'
 
 /** Icons for the trust block. Order matches `copy.values`. */
-const VALUE_ICONS = [IconBriefcase, IconTarget, IconShield, IconChat]
+const VALUE_ICONS = [IconBriefcase, IconShield, IconTarget, IconCompass]
 
 /** Icons for the service teasers. Order matches `copy.services`. */
 const SERVICE_ICONS = [
+  IconCompass,
+  IconBriefcase,
+  IconClipboardCheck,
+  IconShield,
   IconDocSeal,
   IconTruck,
-  IconScale,
-  IconClipboardCheck,
-  IconShip,
-  IconCompass,
 ]
 
 export default function Home() {
   const copy = useCopy()
   const [offset, setOffset] = useState(0)
-  const [active, setActive] = useState<IndustryLike | null>(null)
 
   // Subtle parallax: the hero photograph drifts at 30% of scroll speed.
   useEffect(() => {
@@ -91,7 +86,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={270}>
               <div className="mt-10 flex flex-wrap gap-3">
-                <Button to="/contacto" variant="accent" size="lg">
+                <Button href={CONTACT.whatsapp} variant="accent" size="lg">
                   {copy.common.quoteLong}
                 </Button>
                 <Button to="/servicios" variant="onDark" size="lg">
@@ -128,24 +123,35 @@ export default function Home() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-px overflow-hidden rounded-card bg-navy/10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-px overflow-hidden rounded-card bg-navy sm:grid-cols-2 lg:grid-cols-4">
           {copy.values.map((value, i) => {
             const Icon = VALUE_ICONS[i]
             return (
               <Reveal key={value.id} delay={i * 80} className="h-full">
-                <div className="group flex h-full flex-col bg-white p-7 transition-colors duration-400 hover:bg-mist">
+                <div className="group relative isolate flex h-full min-h-[300px] flex-col overflow-hidden bg-navy p-7">
+                  {/* Decorative backdrop: blurred so it reads as texture, sharpening on hover. */}
+                  <Img
+                    src={unsplash(value.image, 700, 800)}
+                    alt=""
+                    className="absolute inset-0 -z-10 h-full w-full"
+                    imgClassName="scale-110 blur-[3px] transition duration-700 ease-out group-hover:scale-105 group-hover:blur-[1px]"
+                  />
+                  <div
+                    className="absolute inset-0 -z-10 bg-gradient-to-t from-navy via-navy/80 to-navy/55"
+                    aria-hidden="true"
+                  />
                   <div className="flex items-start justify-between">
-                    <span className="grid h-11 w-11 place-items-center rounded-[10px] bg-mist text-blue transition-colors duration-400 group-hover:bg-navy group-hover:text-gold">
+                    <span className="grid h-11 w-11 place-items-center rounded-[10px] border border-white/20 bg-navy/40 text-gold backdrop-blur-sm transition-colors duration-400 group-hover:border-gold group-hover:bg-gold group-hover:text-navy">
                       <Icon className="h-5.5 w-5.5" />
                     </span>
-                    <span className="font-mono text-[10.5px] font-medium tracking-[0.2em] text-light">
+                    <span className="font-mono text-[10.5px] font-medium tracking-[0.2em] text-light/70">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <h3 className="mt-7 text-[16px] font-bold tracking-[-0.015em] text-navy">
+                  <h3 className="mt-auto pt-14 text-[16px] font-bold tracking-[-0.015em] text-white">
                     {value.title}
                   </h3>
-                  <p className="mt-3 text-[13.5px] leading-[1.75] text-steel">{value.text}</p>
+                  <p className="mt-3 text-[13.5px] leading-[1.75] text-light/80">{value.text}</p>
                 </div>
               </Reveal>
             )
@@ -179,6 +185,7 @@ export default function Home() {
                 title={service.title}
                 text={service.short}
                 to={`/servicios#${service.id}`}
+                image={unsplash(service.image, 800, 900)}
               />
             </Reveal>
           ))}
@@ -199,30 +206,14 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* ------------------------------------------------------- Industrias */}
+      {/* --------------------------------------------------------- Clientes */}
       <Section tone="mist">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-          <Reveal className="flex-1">
-            <SectionTitle
-              eyebrow={copy.home.industriesEyebrow}
-              title={copy.home.industriesTitle}
-              lead={copy.home.industriesLead}
-            />
-          </Reveal>
-          <Reveal delay={120}>
-            <Button to="/industrias" variant="outline">
-              {copy.common.viewIndustries}
-            </Button>
-          </Reveal>
-        </div>
-
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {copy.industries.map((industry, i) => (
-            <Reveal key={industry.id} delay={(i % 3) * 70} className="h-full">
-              <IndustryCard industry={industry} onOpen={() => setActive(industry)} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <SectionTitle eyebrow={copy.home.clientsEyebrow} title={copy.home.clientsTitle} />
+        </Reveal>
+        <Reveal delay={120} className="mt-14 block">
+          <ClientGrid clients={copy.clients} />
+        </Reveal>
       </Section>
 
       {/* --------------------------------------------------------- Cobertura */}
@@ -241,24 +232,17 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={120}>
-            <ul className="border-t border-white/12">
+            <ul className="grid border-t border-white/12 sm:grid-cols-2 sm:gap-x-10">
               {copy.customs.map((point, i) => (
                 <li
                   key={point.name}
-                  className="group grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-2 border-b border-white/12 py-6 transition-colors duration-400 hover:bg-white/[0.04] sm:grid-cols-[auto_1fr_auto]"
+                  className="group grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-1.5 border-b border-white/12 py-5 transition-colors duration-400 hover:bg-white/[0.04]"
                 >
                   <span className="font-mono text-[10.5px] font-medium tracking-[0.2em] text-gold">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <div>
-                    <h3 className="text-[18px] font-bold tracking-[-0.02em] text-white">
-                      {point.name}
-                    </h3>
-                    <p className="mt-2 max-w-sm text-[13.5px] leading-relaxed text-light/60">
-                      {point.note}
-                    </p>
-                  </div>
-                  <span className="col-start-2 font-mono text-[10.5px] font-medium tracking-[0.18em] text-steel-300 uppercase sm:col-start-3 sm:text-right">
+                  <h3 className="text-[17px] font-bold tracking-[-0.02em] text-white">{point.name}</h3>
+                  <span className="col-start-2 font-mono text-[10.5px] font-medium tracking-[0.18em] text-steel-300 uppercase">
                     {point.type}
                   </span>
                 </li>
@@ -300,7 +284,6 @@ export default function Home() {
       {/* ------------------------------------------------------------- CTA */}
       <FinalCta />
 
-      <IndustryModal industry={active} onClose={() => setActive(null)} />
     </>
   )
 }
@@ -323,11 +306,11 @@ function FinalCta() {
           </Reveal>
           <Reveal delay={120}>
             <div className="flex flex-wrap gap-3 lg:justify-end">
-              <Button to="/contacto" variant="accent" size="lg">
+              <Button href={CONTACT.whatsapp} variant="accent" size="lg">
                 {copy.home.ctaPrimary}
               </Button>
-              <Button href={CONTACT.whatsapp} variant="onDark" size="lg">
-                {copy.common.whatsapp}
+              <Button to="/contacto" variant="onDark" size="lg">
+                {copy.common.contactForm}
               </Button>
             </div>
           </Reveal>

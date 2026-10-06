@@ -1,7 +1,7 @@
 import type { SVGProps } from 'react'
 
 /**
- * Minimal 24px line icons for the ADUANEX identity: 1.5px strokes, round caps,
+ * Minimal 24px line icons for the Andeus Group site: 1.5px strokes, round caps,
  * no fills. Brand marks at the bottom are solid glyphs (simple-icons, CC0-1.0).
  */
 
@@ -118,87 +118,6 @@ export const IconChat = (p: IconProps) => (
   <Base {...p}>
     <path d="M20.5 11.4c0 3.9-3.8 7.1-8.5 7.1a10 10 0 0 1-2.5-.3l-5 1.7 1.4-3.6a6.7 6.7 0 0 1-2.4-4.9c0-3.9 3.8-7.1 8.5-7.1s8.5 3.2 8.5 7.1Z" />
     <path d="M8.7 11.4h.01M12 11.4h.01M15.3 11.4h.01" />
-  </Base>
-)
-
-/* ------------------------------------------------------------ Industrias */
-
-export const IconCar = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M3.6 16.4v-3.1l1.9-4.5a2 2 0 0 1 1.8-1.2h9.4a2 2 0 0 1 1.8 1.2l1.9 4.5v3.1" />
-    <path d="M3.6 13.3h16.8" />
-    <circle cx="7.3" cy="16.6" r="1.7" />
-    <circle cx="16.7" cy="16.6" r="1.7" />
-    <path d="M3.6 19.2h1.9M18.5 19.2h1.9" />
-  </Base>
-)
-
-export const IconFactory = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M2.5 20.5V11l5.5 3.2V11l5.5 3.2V11l5.5 3.2V20.5Z" />
-    <path d="M2.5 20.5h19" />
-    <path d="M5.6 11V4.5h2.9V11" />
-    <path d="M7 17h1.6M11 17h1.6M15 17h1.6" />
-  </Base>
-)
-
-export const IconChip = (p: IconProps) => (
-  <Base {...p}>
-    <rect x="7" y="7" width="10" height="10" rx="1.4" />
-    <rect x="10.3" y="10.3" width="3.4" height="3.4" rx="0.6" />
-    <path d="M10 7V4.2M14 7V4.2M10 19.8V17M14 19.8V17M7 10H4.2M7 14H4.2M19.8 10H17M19.8 14H17" />
-  </Base>
-)
-
-export const IconBottle = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M10 2.9h4v3l1.7 2.7v10.5a1.4 1.4 0 0 1-1.4 1.4H9.7a1.4 1.4 0 0 1-1.4-1.4V8.6L10 5.9z" />
-    <path d="M8.3 12.6h7.4" />
-    <path d="M17.6 8.6h3.5v6.2a1.4 1.4 0 0 1-1.4 1.4h-2.1" />
-  </Base>
-)
-
-export const IconGear = (p: IconProps) => (
-  <Base {...p}>
-    <circle cx="12" cy="12" r="3.2" />
-    <path d="M12 2.6v2.6M12 18.8v2.6M21.4 12h-2.6M5.2 12H2.6M18.6 5.4l-1.9 1.9M7.3 16.7l-1.9 1.9M18.6 18.6l-1.9-1.9M7.3 7.3 5.4 5.4" />
-    <circle cx="12" cy="12" r="7.6" strokeDasharray="2.6 3.4" />
-  </Base>
-)
-
-/** Siderurgia — rollos de acero. */
-export const IconCoils = (p: IconProps) => (
-  <Base {...p}>
-    <circle cx="8.2" cy="8.8" r="3.6" />
-    <circle cx="15.8" cy="8.8" r="3.6" />
-    <circle cx="12" cy="15.6" r="3.6" />
-    <path d="M8.2 8.4h.01M15.8 8.4h.01M12 15.2h.01" />
-  </Base>
-)
-
-export const IconServer = (p: IconProps) => (
-  <Base {...p}>
-    <rect x="3.5" y="4" width="17" height="6" rx="1.4" />
-    <rect x="3.5" y="14" width="17" height="6" rx="1.4" />
-    <path d="M7 7h.01M7 17h.01" />
-    <path d="M10.5 7h6M10.5 17h6" />
-  </Base>
-)
-
-export const IconSofa = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M4.2 12.4V8.7a2.1 2.1 0 0 1 2.1-2.1h11.4a2.1 2.1 0 0 1 2.1 2.1v3.7" />
-    <rect x="2.8" y="12.4" width="18.4" height="4.9" rx="1.6" />
-    <path d="M6 17.3v2.2M18 17.3v2.2" />
-    <path d="M7.4 12.4V9.6h9.2v2.8" />
-  </Base>
-)
-
-export const IconCart = (p: IconProps) => (
-  <Base {...p}>
-    <path d="M2.8 4h2.3l2.4 10.6h9.4l2.3-7.7H6.3" />
-    <circle cx="9.6" cy="18.4" r="1.5" />
-    <circle cx="16.4" cy="18.4" r="1.5" />
   </Base>
 )
 
