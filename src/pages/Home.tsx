@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { CONTACT, unsplash } from '../content/copy'
+import { CONTACT, photo } from '../content/copy'
 import { useCopy } from '../i18n'
-import { ClientGrid, FeatureCard, Timeline } from '../components/cards'
+import { FeatureCard, Timeline } from '../components/cards'
 import {
   IconBriefcase,
   IconClipboardCheck,
@@ -13,7 +13,7 @@ import {
 } from '../components/icons'
 import { Button, Eyebrow, Highlight, Img, Reveal, Section, SectionTitle } from '../components/ui'
 
-const HERO_IMAGE = '1578575437130-527eed3abbec'
+const HERO_IMAGE = 'hero-puerto-grua-ciudad'
 
 /** Icons for the trust block. Order matches `copy.values`. */
 const VALUE_ICONS = [IconBriefcase, IconShield, IconTarget, IconCompass]
@@ -56,7 +56,7 @@ export default function Home() {
           style={{ transform: `translateY(${offset}px)` }}
         >
           <Img
-            src={unsplash(HERO_IMAGE, 2000, 1300)}
+            src={photo(HERO_IMAGE)}
             alt={copy.home.heroImageAlt}
             loading="eager"
             className="h-full w-full"
@@ -131,7 +131,7 @@ export default function Home() {
                 <div className="group relative isolate flex h-full min-h-[300px] flex-col overflow-hidden bg-navy p-7">
                   {/* Decorative backdrop: blurred so it reads as texture, sharpening on hover. */}
                   <Img
-                    src={unsplash(value.image, 700, 800)}
+                    src={photo(value.image)}
                     alt=""
                     className="absolute inset-0 -z-10 h-full w-full"
                     imgClassName="scale-110 blur-[3px] transition duration-700 ease-out group-hover:scale-105 group-hover:blur-[1px]"
@@ -185,7 +185,7 @@ export default function Home() {
                 title={service.title}
                 text={service.short}
                 to={`/servicios#${service.id}`}
-                image={unsplash(service.image, 800, 900)}
+                image={photo(service.image)}
               />
             </Reveal>
           ))}
@@ -203,16 +203,6 @@ export default function Home() {
         </Reveal>
         <Reveal delay={120} className="mt-16 block">
           <Timeline items={copy.process} />
-        </Reveal>
-      </Section>
-
-      {/* --------------------------------------------------------- Clientes */}
-      <Section tone="mist">
-        <Reveal>
-          <SectionTitle eyebrow={copy.home.clientsEyebrow} title={copy.home.clientsTitle} />
-        </Reveal>
-        <Reveal delay={120} className="mt-14 block">
-          <ClientGrid clients={copy.clients} />
         </Reveal>
       </Section>
 

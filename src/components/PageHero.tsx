@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { unsplash } from '../content/copy'
+import { photo } from '../content/copy'
 import { Eyebrow, Img } from './ui'
 
 /** Compact dark hero used by every page other than Home. */
@@ -21,7 +21,7 @@ export default function PageHero({
   return (
     <section className="relative isolate overflow-hidden bg-navy">
       <Img
-        src={unsplash(image, 1800, 1000)}
+        src={photo(image)}
         alt={imageAlt}
         loading="eager"
         className="absolute inset-0 h-full w-full"

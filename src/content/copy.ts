@@ -6,8 +6,8 @@
  * company presentation (`cliente/Presentación 1_compressed (1).pdf`).
  */
 
-export const unsplash = (id: string, w: number, h: number) =>
-  `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`
+/** Client photograph under `public/images/`, by file name without extension. */
+export const photo = (name: string) => `${import.meta.env.BASE_URL}images/${name}.webp`
 
 export const CONTACT = {
   whatsapp: 'https://wa.me/524421160464',
@@ -79,7 +79,7 @@ export const es = {
     } as Accented,
     heroSubtitle:
       'Consultores especializados que garantizan el cumplimiento del marco jurídico aduanero de tus operaciones, con un servicio de estrategia, personalizado y de calidad.',
-    heroImageAlt: 'Buque portacontenedores en maniobra junto a las grúas de una terminal portuaria',
+    heroImageAlt: 'Grúas de una terminal de contenedores frente a los edificios de la ciudad, vistas desde el mar',
     heroFacts: [
       { label: 'Servicios', value: 'Consultoría, auditoría y certificación' },
       { label: 'Cobertura', value: 'Agencia aduanal en 10 plazas' },
@@ -102,10 +102,7 @@ export const es = {
     processLead:
       'Cada servicio parte de las necesidades de tu operación y del marco jurídico que le aplica.',
 
-    clientsEyebrow: '04 — Clientes',
-    clientsTitle: 'Empresas que confían en nosotros',
-
-    coverageEyebrow: '05 — Cobertura',
+    coverageEyebrow: '04 — Cobertura',
     coverageTitle: {
       lead: 'Agencia aduanal y comercializadora en ',
       accent: 'diez plazas estratégicas',
@@ -116,7 +113,7 @@ export const es = {
     coverageNote:
       'Transporte aéreo, marítimo y terrestre, almacenaje, consolidación y seguro de mercancía como parte del mismo servicio.',
 
-    statementEyebrow: '06 — Nuestra propuesta',
+    statementEyebrow: '05 — Nuestra propuesta',
     statementTitle: {
       lead: 'Soluciones integrales a través de consultores ',
       accent: 'altamente capacitados',
@@ -139,25 +136,25 @@ export const es = {
   values: [
     {
       id: 'especialistas',
-      image: '1521737604893-d14cc237f11d',
+      image: 'contenedores-gruas-patio',
       title: 'Consultores especializados',
       text: 'Un equipo altamente capacitado en logística, transporte y comercio exterior.',
     },
     {
       id: 'cumplimiento',
-      image: '1589829545856-d10d557cf95f',
+      image: 'garita-aduana-trailer',
       title: 'Cumplimiento jurídico',
       text: 'Garantizamos el cumplimiento del marco jurídico en materia aduanera de tus operaciones.',
     },
     {
       id: 'prevencion',
-      image: '1551288049-bebda4e38f71',
+      image: 'gruas-puerto-noche-vertical',
       title: 'Prevención de riesgos',
       text: 'Alertas oportunas para reducir o eliminar los riesgos fiscales de tu empresa.',
     },
     {
       id: 'integral',
-      image: '1605745341112-85968b19335b',
+      image: 'pista-aeropuerto-sala',
       title: 'Soluciones integrales',
       text: 'Consultoría, auditoría, certificación, trámites y logística en un mismo despacho.',
     },
@@ -200,22 +197,12 @@ export const es = {
     { name: 'Monterrey', type: 'Aduana interior' },
   ],
 
-  /** Companies listed in the client's presentation. `logo` is a path under `public/`. */
-  clients: [
-    { name: 'IAS Automation' },
-    { name: 'Alfa de Occidente' },
-    { name: 'Zimmer Group' },
-    { name: 'Mosco & Co' },
-    { name: 'OTB' },
-    { name: 'Balluff' },
-  ] as { name: string; logo?: string }[],
-
   servicesPage: {
     eyebrow: 'Servicios',
     title: 'Consultoría, auditoría, certificación y logística',
     lead:
       'Seis líneas de servicio con consultores altamente capacitados, para que tu empresa opere su comercio exterior con estrategia y cumplimiento.',
-    heroImageAlt: 'Vista aérea de una terminal de contenedores con grúas de patio',
+    heroImageAlt: 'Panorámica de un puerto con grúas de contenedores y la ciudad al fondo',
     indexTitle: 'Índice de servicios',
     ctaTitle: '¿Tu empresa necesita más de un servicio?',
     ctaLead:
@@ -241,8 +228,8 @@ export const es = {
         'Asesoría legal corporativa y mercantil',
         'Propiedad intelectual',
       ],
-      image: '1600880292203-757bb62b4baf',
-      imageAlt: 'Equipo de consultores revisando la estrategia de una empresa',
+      image: 'terminal-gruas-azules',
+      imageAlt: 'Grúas pórtico azules en el muelle de una terminal de contenedores',
     },
     {
       id: 'capacitacion',
@@ -258,8 +245,8 @@ export const es = {
         'Protección de datos',
         'Propiedad intelectual',
       ],
-      image: '1552664730-d307ca884978',
-      imageAlt: 'Sesión de capacitación con un equipo de trabajo frente a una presentación',
+      image: 'flota-buques-bahia',
+      imageAlt: 'Buques mercantes fondeados en una bahía, vistos desde un avión',
     },
     {
       id: 'auditoria',
@@ -277,8 +264,8 @@ export const es = {
         'Auditoría de Anexo 24',
         'Auditoría legal corporativa y mercantil',
       ],
-      image: '1554224155-6726b3ff858f',
-      imageAlt: 'Escritorio con documentos y análisis de una auditoría',
+      image: 'bodega-cajas-madera',
+      imageAlt: 'Cajas de madera con mercancía embalada dentro de una bodega',
     },
     {
       id: 'certificacion-nom',
@@ -295,8 +282,8 @@ export const es = {
         'Traducción de manuales y fichas técnicas',
         'Trámite de folios SOL',
       ],
-      image: '1581091226825-a6a2a5aee158',
-      imageAlt: 'Técnica inspeccionando un proceso de producción en planta',
+      image: 'buque-carga-noche',
+      imageAlt: 'Buque portacontenedores cargado bajo las grúas de un puerto de noche',
     },
     {
       id: 'tramites-certificaciones',
@@ -313,8 +300,8 @@ export const es = {
         'OEA / C-TPAT',
         'Avisos automáticos de importación / exportación',
       ],
-      image: '1450101499163-c8848c66ca85',
-      imageAlt: 'Persona revisando y firmando la documentación de un trámite',
+      image: 'avion-carga-pista',
+      imageAlt: 'Avión de carga en la pista de un aeropuerto',
     },
     {
       id: 'logistica-transporte',
@@ -331,8 +318,8 @@ export const es = {
         'Agencia aduanal y comercializadora',
       ],
       appliesTo: CUSTOMS_POINTS,
-      image: '1494412651409-8963ce7935a7',
-      imageAlt: 'Vista aérea de una terminal de contenedores con grúas y patios de carga',
+      image: 'terminal-amanecer',
+      imageAlt: 'Terminal de contenedores con sus grúas al amanecer, vista desde el agua',
     },
   ] as {
     id: string
@@ -350,7 +337,7 @@ export const es = {
     title: 'Un despacho de consultores especializados en comercio exterior',
     lead:
       'Andeus Group brinda soluciones integrales de logística, transporte y comercio exterior a empresas que operan en México.',
-    heroImageAlt: 'Torres corporativas de un centro financiero',
+    heroImageAlt: 'Grúas de una terminal portuaria a contraluz sobre el mar',
 
     storyEyebrow: '01 — Quiénes somos',
     storyTitle: 'Cumplimiento jurídico con visión estratégica',
@@ -359,14 +346,12 @@ export const es = {
       'Nuestra propuesta es brindar a su empresa soluciones integrales con servicios personalizados a través de nuestros consultores altamente capacitados: un servicio de estrategia, personalizado y de calidad, alineado a sus necesidades.',
       'Nuestros servicios abarcan consultoría, capacitación, auditoría, certificación NOM, trámites y certificaciones, despacho aduanal, y logística y transporte nacional e internacional.',
     ],
-    storyImageAlt: 'Dos personas revisando documentación de comercio exterior en una oficina',
+    storyImageAlt: 'Buque portacontenedores navegando en mar abierto, visto desde el aire',
 
     valueBlockEyebrow: '02 — Compromiso',
     valueBlockTitle: 'Lo que nos distingue',
 
-    clientsEyebrow: '03 — Clientes',
-
-    processEyebrow: '04 — Proceso',
+    processEyebrow: '03 — Proceso',
 
     ctaTitle: 'Trabajemos con tu empresa',
     ctaLead:
@@ -378,7 +363,7 @@ export const es = {
     title: 'Hablemos de tu empresa',
     lead:
       'Cuéntanos qué necesita tu operación de comercio exterior y te ayudamos a definir la estrategia adecuada.',
-    heroImageAlt: 'Almacén con mercancía organizada en racks, lista para su distribución',
+    heroImageAlt: 'Grúas de contenedores y edificios de la ciudad en la orilla, vistos desde el mar bajo un cielo con nubes',
 
     infoTitle: 'Información de contacto',
     cards: [
@@ -412,14 +397,14 @@ export const es = {
     ],
     rights: '© 2026 Andeus Group. Todos los derechos reservados.',
     privacy: { label: 'Aviso de privacidad', to: '/aviso-de-privacidad' },
-    credit: { label: 'Diseño y desarrollo', studio: 'Avalon Nova', href: 'https://avalonnova.com' },
+    credit: { label: 'Sitio desarrollado por', studio: 'Avalon Nova', href: 'https://avalonnova.com' },
   },
 
   privacyPage: {
     eyebrow: 'Legal',
     title: 'Aviso de privacidad',
     lead: 'Cómo Andeus Group trata los datos personales de quienes nos contactan y de nuestros clientes.',
-    heroImageAlt: 'Persona revisando y firmando documentación en un escritorio',
+    heroImageAlt: 'Grúas de un puerto iluminadas de noche, reflejadas en el agua',
     updated: 'Última actualización: 6 de octubre de 2026',
     sections: [
       {

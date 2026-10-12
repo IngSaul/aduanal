@@ -1,7 +1,7 @@
-import { CONTACT, unsplash } from '../content/copy'
+import { CONTACT, photo } from '../content/copy'
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
-import { ClientGrid, Timeline, ValueCard } from '../components/cards'
+import { Timeline, ValueCard } from '../components/cards'
 import { IconBriefcase, IconCompass, IconShield, IconTarget } from '../components/icons'
 import { Button, Img, Reveal, Section, SectionTitle } from '../components/ui'
 
@@ -18,7 +18,7 @@ export default function About() {
         eyebrow={about.eyebrow}
         title={about.title}
         lead={about.lead}
-        image="1486406146926-c627a92ad1ab"
+        image="terminal-gruas-contraluz"
         imageAlt={about.heroImageAlt}
       />
 
@@ -28,7 +28,7 @@ export default function About() {
           <Reveal>
             <div className="relative lg:sticky lg:top-28">
               <Img
-                src={unsplash('1454165804606-c3d57bc86b40', 900, 900)}
+                src={photo('buque-vista-aerea')}
                 alt={about.storyImageAlt}
                 className="aspect-square w-full rounded-card"
               />
@@ -64,16 +64,6 @@ export default function About() {
             </Reveal>
           ))}
         </div>
-      </Section>
-
-      {/* ---------------------------------------------------------- Clientes */}
-      <Section tone="mist">
-        <Reveal>
-          <SectionTitle eyebrow={about.clientsEyebrow} title={copy.home.clientsTitle} />
-        </Reveal>
-        <Reveal delay={120} className="mt-14 block">
-          <ClientGrid clients={copy.clients} />
-        </Reveal>
       </Section>
 
       {/* ----------------------------------------------------------- Proceso */}

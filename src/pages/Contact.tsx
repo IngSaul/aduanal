@@ -17,7 +17,7 @@ export default function Contact() {
         eyebrow={page.eyebrow}
         title={page.title}
         lead={page.lead}
-        image="1587293852726-70cdb56c2866"
+        image="puerto-ciudad-gruas-dia"
         imageAlt={page.heroImageAlt}
       />
 

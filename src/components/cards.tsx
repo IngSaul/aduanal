@@ -94,37 +94,6 @@ export function FeatureCard({
   )
 }
 
-/* --------------------------------------------------------------- ClientGrid */
-
-export type ClientLike = { name: string; logo?: string }
-
-/** Wall of client marks. Shows the logo when there is one, the name otherwise. */
-export function ClientGrid({ clients }: { clients: readonly ClientLike[] }) {
-  return (
-    <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-card bg-navy/10 md:grid-cols-3">
-      {clients.map((client) => (
-        <li
-          key={client.name}
-          className="grid h-28 place-items-center bg-white px-6 text-center transition-colors duration-400 hover:bg-mist md:h-32"
-        >
-          {client.logo ? (
-            <img
-              src={client.logo}
-              alt={client.name}
-              loading="lazy"
-              className="max-h-10 w-auto max-w-[70%] object-contain opacity-70 grayscale transition duration-400 hover:opacity-100 hover:grayscale-0"
-            />
-          ) : (
-            <span className="text-[15px] font-bold tracking-[0.06em] text-navy/70 uppercase md:text-[17px]">
-              {client.name}
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 /* ---------------------------------------------------------------- ValueCard */
 
 /** Dark card used for value propositions — no figures, only substance. */

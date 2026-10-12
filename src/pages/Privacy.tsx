@@ -12,7 +12,7 @@ export default function Privacy() {
         eyebrow={page.eyebrow}
         title={page.title}
         lead={page.lead}
-        image="1450101499163-c8848c66ca85"
+        image="puerto-gruas-noche"
         imageAlt={page.heroImageAlt}
       />
 

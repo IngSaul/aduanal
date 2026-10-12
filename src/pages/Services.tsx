@@ -1,4 +1,4 @@
-import { CONTACT, unsplash } from '../content/copy'
+import { CONTACT, photo } from '../content/copy'
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
 import {
@@ -23,7 +23,7 @@ export default function Services() {
         eyebrow={copy.servicesPage.eyebrow}
         title={copy.servicesPage.title}
         lead={copy.servicesPage.lead}
-        image="1494412574643-ff11b0a5c1c3"
+        image="puerto-ciudad-panoramica"
         imageAlt={copy.servicesPage.heroImageAlt}
       >
         <Button href={CONTACT.whatsapp} variant="accent">
@@ -76,7 +76,7 @@ export default function Services() {
                 <Reveal className={flip ? 'lg:order-2' : ''}>
                   <div className="relative">
                     <Img
-                      src={unsplash(service.image, 1100, 850)}
+                      src={photo(service.image)}
                       alt={service.imageAlt}
                       className="aspect-[5/4] w-full rounded-card"
                     />
