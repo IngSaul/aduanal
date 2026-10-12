@@ -54,6 +54,8 @@ export const es = {
       { to: '/nosotros', label: 'Nosotros' },
       { to: '/contacto', label: 'Contacto' },
     ],
+    /** Placeholder anchor until the blog has content. */
+    blog: { href: '#blog', label: 'Blog' },
     cta: 'Solicitar asesoría',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',

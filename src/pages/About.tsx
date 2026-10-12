@@ -19,6 +19,7 @@ export default function About() {
         title={about.title}
         lead={about.lead}
         image="terminal-gruas-contraluz"
+        imagePosition="object-[center_72%]"
         imageAlt={about.heroImageAlt}
       />
 

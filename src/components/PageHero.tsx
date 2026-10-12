@@ -9,6 +9,7 @@ export default function PageHero({
   lead,
   image,
   imageAlt,
+  imagePosition = '',
   children,
 }: {
   eyebrow: string
@@ -16,6 +17,8 @@ export default function PageHero({
   lead: string
   image: string
   imageAlt: string
+  /** Tailwind object-position class to reframe the photo, e.g. `object-[center_70%]`. */
+  imagePosition?: string
   children?: ReactNode
 }) {
   return (
@@ -25,10 +28,10 @@ export default function PageHero({
         alt={imageAlt}
         loading="eager"
         className="absolute inset-0 h-full w-full"
-        imgClassName="opacity-30"
+        imgClassName={`opacity-60 ${imagePosition}`}
       />
       <div
-        className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/45"
+        className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/70 to-navy/15"
         aria-hidden="true"
       />
       <div className="grid-etch absolute inset-0 opacity-70" aria-hidden="true" />

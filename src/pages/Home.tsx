@@ -60,11 +60,11 @@ export default function Home() {
             alt={copy.home.heroImageAlt}
             loading="eager"
             className="h-full w-full"
-            imgClassName="opacity-40"
+            imgClassName="opacity-65"
           />
         </div>
         <div
-          className="absolute inset-0 bg-gradient-to-tr from-navy via-navy/88 to-navy/30"
+          className="absolute inset-0 bg-gradient-to-tr from-navy via-navy/70 to-navy/15"
           aria-hidden="true"
         />
         <div className="grid-etch absolute inset-0" aria-hidden="true" />

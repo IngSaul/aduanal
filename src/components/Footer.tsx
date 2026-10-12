@@ -42,6 +42,14 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href={copy.nav.blog.href}
+                  className="link-underline inline-block py-1 text-[14px] text-light/80 transition-colors hover:text-white"
+                >
+                  {copy.nav.blog.label}
+                </a>
+              </li>
             </ul>
           </nav>
 

@@ -70,6 +70,15 @@ export default function Navbar() {
                 {({ isActive }) => <span data-active={isActive}>{item.label}</span>}
               </NavLink>
             ))}
+            <a
+              href={copy.nav.blog.href}
+              className={[
+                'link-underline text-[13px] font-semibold tracking-[0.06em] transition-colors duration-300',
+                solid ? 'text-navy hover:text-gold-600' : 'text-white/75 hover:text-white',
+              ].join(' ')}
+            >
+              <span>{copy.nav.blog.label}</span>
+            </a>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -143,6 +152,16 @@ export default function Navbar() {
               {item.label}
             </NavLink>
           ))}
+          <a
+            href={copy.nav.blog.href}
+            onClick={() => setOpen(false)}
+            className="flex items-baseline gap-4 border-b border-navy/8 py-4 text-[17px] font-semibold tracking-[-0.01em] text-navy transition-colors"
+          >
+            <span className="font-mono text-[10px] font-medium tracking-[0.2em] text-steel">
+              {String(copy.nav.items.length + 1).padStart(2, '0')}
+            </span>
+            {copy.nav.blog.label}
+          </a>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <a
