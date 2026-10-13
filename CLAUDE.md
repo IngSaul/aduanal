@@ -18,6 +18,7 @@
 - Canonical paths have a trailing slash and come from `PATHS` in `src/seo/paths.ts` — use it for every internal link. A new public page needs an entry in `paths.ts`, `seo/routes.ts` and `src/routes.tsx`.
 - The app hydrates prerendered HTML: no `window`/`document` outside effects, no random or time-dependent render output. Above-the-fold `Reveal`s use `onLoad` (CSS-only animation) so the LCP never waits for JS; the hero `Img` uses `priority`.
 - Never invent business data in schema (no ratings, hours, prices or people). Open TODOs are marked `TODO(negocio)` / `TODO(hosting)`.
+- Open Graph lives in the same registry (`ogTitle` ≤ 60, `ogDescription` ≤ 110, `ogImage`, `ogImageAlt`); `socialTags()` in `src/seo/head.ts` feeds both the prerender and the client sync. Share images are committed in `public/og/` and made by `npm run og:images` (headless Chrome + ImageMagick) — never at build time. Bump the `-vN` in the file name whenever an image changes.
 
 ## Navigation
 

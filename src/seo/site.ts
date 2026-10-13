@@ -47,6 +47,8 @@ export const SITE = {
   areaServed: [...SERVICE_AREA, 'México'],
 
   social: [{ label: 'Instagram', url: 'https://www.instagram.com/andeus_group/' }],
+  /** X (Twitter) handle with @. Empty: the brand has no account, so no twitter:site. */
+  xHandle: '',
 
   /** Raster logo for structured data (Google does not accept SVG there). */
   logo: '/brand/andeus-logo.png',

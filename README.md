@@ -8,10 +8,11 @@ Sitio de Andeus Group (comercio exterior, logística y despacho aduanal). React 
 |---|---|
 | `npm run dev` | Servidor de desarrollo en el puerto 8443 (SPA, sin prerender). |
 | `npm run build` | Build del cliente, build SSR (`dist-ssr/`), prerender de cada ruta a `dist/<ruta>/index.html`, `dist/404.html` y `dist/sitemap.xml`. |
-| `npm run seo:check` | Audita los HTML de `dist/` (title, h1, description, canonical, alt, JSON-LD, sitemap, dominio). Correr después del build. |
+| `npm run seo:check` | Audita los HTML de `dist/` (title, h1, description, canonical, alt, JSON-LD, sitemap, dominio, etiquetas Open Graph/Twitter y las imágenes para compartir). Correr después del build. |
+| `npm run og:images` | Regenera las imágenes para compartir (`public/og/`) y los íconos. Solo cuando cambian; requiere Chrome/Chromium e ImageMagick en el sistema. |
 | `npm run preview` | Sirve `dist/` para revisarlo. |
 
-Se publica el contenido de `dist/`. `dist-ssr/` solo se usa durante el build.
+Se publica el contenido de `dist/`, **excepto `dist/og-preview.html`**, que es solo para revisar las tarjetas en local (robots.txt lo bloquea y `.htaccess` responde 404). `dist-ssr/` solo se usa durante el build.
 
 ## SEO
 
@@ -19,6 +20,12 @@ Se publica el contenido de `dist/`. `dist-ssr/` solo se usa durante el build.
 - `src/seo/routes.ts`: title, description, h1, indexable, prioridad del sitemap, schema e imagen OG de cada ruta. Una ruta pública nueva se agrega aquí, en `src/seo/paths.ts` y en `src/routes.tsx`.
 - `src/seo/head.ts` y `src/seo/schema.ts`: generan el `<head>` y el JSON-LD que el prerender inyecta en `<!--app-head-->`.
 - Search Console y GA4 quedan apagados: se activan llenando `googleSiteVerification` y `ga4Id` en `site.ts`.
+
+## Open Graph (vista previa al compartir)
+
+- Cada ruta de `src/seo/routes.ts` tiene `ogTitle` (≤ 60), `ogDescription` (≤ 110), `ogImage` y `ogImageAlt`; las páginas noindex usan la tarjeta de marca `og-default`.
+- Las imágenes 1200×630 viven en `public/og/` y se versionan en git. Se generan con `npm run og:images` (plantilla en `scripts/og-images.mjs`). Si una cambia, sube la versión del nombre (`-v2`) en el script y en `routes.ts`: las redes guardan en caché la vista previa anterior.
+- Íconos: `favicon.ico`, `favicon.svg`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` y `site.webmanifest`, generados del símbolo del logo (`public/brand/andeus-simbolo.svg`, extraído de `logo.ai`).
 
 ## Servidor de producción
 
@@ -59,6 +66,7 @@ server {
 
     location = /industrias { return 301 https://andeus.mx/; }
     location = /industrias/ { return 301 https://andeus.mx/; }
+    location = /og-preview.html { return 404; }
 
     error_page 404 /404.html;
 

@@ -23,8 +23,18 @@ export type SeoRoute = {
   schema: SchemaType[]
   /** LCP photo (file name under `public/images/`), preloaded in the head. */
   lcpImage?: string
-  /** Absolute or root-relative 1200×630 image. Filled in by the Open Graph step. */
+  /** Share card. Falls back to `title` / `description` when absent. */
+  ogTitle?: string
+  ogDescription?: string
+  /** Root-relative 1200×630 JPG under `public/og/`, versioned in the name. */
   ogImage: string
+  ogImageAlt: string
+}
+
+/** Brand card for pages without their own image (and every noindex page). */
+const OG_DEFAULT = {
+  ogImage: '/og/og-default-v1.jpg',
+  ogImageAlt: 'Logotipo de Andeus Group sobre un puerto iluminado de noche, con el texto «Comercio exterior y logística»',
 }
 
 const BASE_SCHEMA: SchemaType[] = ['WebSite', 'ProfessionalService']
@@ -41,7 +51,10 @@ export const SEO_ROUTES: SeoRoute[] = [
     changefreq: 'monthly',
     schema: BASE_SCHEMA,
     lcpImage: es.home.heroImage,
-    ogImage: '',
+    ogTitle: 'Andeus Group | Agencia aduanal en Querétaro',
+    ogDescription: 'Consultoría en comercio exterior, despacho aduanal y logística en 10 plazas de México.',
+    ogImage: '/og/og-inicio-v1.jpg',
+    ogImageAlt: 'Logotipo de Andeus Group sobre una terminal portuaria, con el texto «Agencia aduanal en Querétaro»',
   },
   {
     path: PATHS.services,
@@ -54,7 +67,10 @@ export const SEO_ROUTES: SeoRoute[] = [
     changefreq: 'monthly',
     schema: [...BASE_SCHEMA, 'OfferCatalog'],
     lcpImage: es.servicesPage.heroImage,
-    ogImage: '',
+    ogTitle: 'Servicios de comercio exterior | Andeus Group',
+    ogDescription: 'Consultoría, capacitación, auditoría, certificación NOM, trámites y logística en un solo despacho.',
+    ogImage: '/og/og-servicios-v1.jpg',
+    ogImageAlt: 'Logotipo de Andeus Group sobre grúas de contenedores, con el texto «Servicios de comercio exterior»',
   },
   {
     path: PATHS.about,
@@ -67,7 +83,10 @@ export const SEO_ROUTES: SeoRoute[] = [
     changefreq: 'yearly',
     schema: BASE_SCHEMA,
     lcpImage: es.aboutPage.heroImage,
-    ogImage: '',
+    ogTitle: 'Conoce a Andeus Group',
+    ogDescription: 'Consultores especializados que cuidan el cumplimiento aduanero de tu empresa.',
+    ogImage: '/og/og-nosotros-v1.jpg',
+    ogImageAlt: 'Logotipo de Andeus Group sobre grúas a contraluz, con el texto «Consultores en comercio exterior»',
   },
   {
     path: PATHS.contact,
@@ -80,7 +99,10 @@ export const SEO_ROUTES: SeoRoute[] = [
     changefreq: 'yearly',
     schema: BASE_SCHEMA,
     lcpImage: es.contactPage.heroImage,
-    ogImage: '',
+    ogTitle: 'Habla con Andeus Group',
+    ogDescription: 'Escríbenos por WhatsApp o correo y recibe asesoría en comercio exterior desde Querétaro.',
+    ogImage: '/og/og-contacto-v1.jpg',
+    ogImageAlt: 'Logotipo de Andeus Group sobre el puerto y la ciudad, con el texto «Hablemos de tu empresa»',
   },
   {
     path: PATHS.privacy,
@@ -93,7 +115,9 @@ export const SEO_ROUTES: SeoRoute[] = [
     changefreq: 'yearly',
     schema: BASE_SCHEMA,
     lcpImage: es.privacyPage.heroImage,
-    ogImage: '',
+    ogTitle: 'Aviso de privacidad | Andeus Group',
+    ogDescription: 'Cómo Andeus Group protege tus datos personales y cómo ejercer tus derechos ARCO.',
+    ...OG_DEFAULT,
   },
 ]
 
@@ -107,7 +131,10 @@ export const NOT_FOUND_ROUTE: SeoRoute = {
   priority: 0,
   changefreq: 'yearly',
   schema: [],
-  ogImage: '',
+  // Generic brand card: a shared broken link still previews as Andeus Group.
+  ogTitle: 'Andeus Group',
+  ogDescription: 'Consultoría en comercio exterior, despacho aduanal y logística desde Querétaro.',
+  ...OG_DEFAULT,
 }
 
 /** Paths that must never be indexed (robots.txt Disallow). None yet. */

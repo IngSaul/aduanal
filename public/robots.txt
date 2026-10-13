@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /og-preview.html
 
 Sitemap: https://andeus.mx/sitemap.xml

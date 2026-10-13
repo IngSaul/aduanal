@@ -22,6 +22,6 @@ export async function render(url: string): Promise<{ html: string; status: numbe
   return { html, status: context.statusCode }
 }
 
-export { renderHead } from './seo/head'
+export { renderHead, socialTags } from './seo/head'
 export { NOT_FOUND_ROUTE, PRIVATE_PATHS, SEO_ROUTES } from './seo/routes'
 export { SITE } from './seo/site'

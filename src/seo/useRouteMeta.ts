@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router'
-import { canonicalUrl, robotsContent } from './head'
+import { canonicalUrl, robotsContent, socialTags } from './head'
 import { findSeoRoute } from './routes'
 
 /** Find or create a `<head>` element matched by `selector`. */
@@ -12,17 +12,17 @@ function headElement<T extends HTMLElement>(selector: string, create: () => T): 
   return element
 }
 
-function setMeta(name: string, content: string) {
-  headElement(`meta[name="${name}"]`, () => {
+function setMeta(name: string, content: string, attr: 'name' | 'property' = 'name') {
+  headElement(`meta[${attr}="${name}"]`, () => {
     const meta = document.createElement('meta')
-    meta.name = name
+    meta.setAttribute(attr, name)
     return meta
   }).content = content
 }
 
 /**
- * Keeps title, description, robots and canonical in step with client-side
- * navigation. The prerendered HTML already carries the same values on load.
+ * Keeps title, description, robots, canonical and the social tags in step with
+ * client-side navigation. The prerendered HTML already carries them on load.
  */
 export function useRouteMeta() {
   const { pathname } = useLocation()
@@ -32,6 +32,7 @@ export function useRouteMeta() {
     document.title = route.title
     setMeta('description', route.description)
     setMeta('robots', robotsContent(route))
+    for (const tag of socialTags(route)) setMeta(tag.key, tag.content, tag.attr)
 
     const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
     if (route.indexable) {
