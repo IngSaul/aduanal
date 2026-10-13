@@ -1,0 +1,24 @@
+{
+  "name": "andeus-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sanity Studio del blog Noticias de Andeus Group (andeus.sanity.studio)",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/icons": "^5.2.3",
+    "@sanity/locale-es-es": "^1.2.39",
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
+    "sanity": "^6.18.0",
+    "styled-components": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}

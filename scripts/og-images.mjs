@@ -2,7 +2,8 @@
 // (favicon.svg, favicon.ico, apple-touch-icon.png, icon-192/512.png).
 //
 // Run once with `npm run og:images` and commit the output; the build does not
-// regenerate them. Needs Chrome/Chromium (screenshots) and ImageMagick
+// regenerate them. `npm run og:images -- og-noticias-v1.jpg` makes only the
+// named share images and leaves the icons alone. Needs Chrome/Chromium (screenshots) and ImageMagick
 // (`magick`, PNG → JPG/ICO) on the system. When an image changes, bump its
 // version in the file name here and in src/seo/routes.ts so networks refetch.
 import { execFileSync } from 'node:child_process'
@@ -25,6 +26,7 @@ const OG_IMAGES = [
   { file: 'og-servicios-v1.jpg', title: 'Servicios de comercio exterior', photo: 'terminal-gruas-azules' },
   { file: 'og-nosotros-v1.jpg', title: 'Consultores en comercio exterior', photo: 'terminal-gruas-contraluz' },
   { file: 'og-contacto-v1.jpg', title: 'Hablemos de tu empresa', photo: 'puerto-ciudad-gruas-dia' },
+  { file: 'og-noticias-v1.jpg', title: 'Noticias de comercio exterior', photo: 'terminal-amanecer' },
   { file: 'og-default-v1.jpg', title: 'Comercio exterior y logística', photo: 'puerto-gruas-noche' },
 ]
 
@@ -100,7 +102,8 @@ const ogHtml = ({ title, photo }) => `<!doctype html>
   <div class="bar"></div>
 </body></html>`
 
-for (const spec of OG_IMAGES) {
+const only = process.argv.slice(2)
+for (const spec of OG_IMAGES.filter((s) => !only.length || only.includes(s.file))) {
   const png = join(work, `${spec.file}.png`)
   const out = join(pub, 'og', spec.file)
   screenshot(ogHtml(spec), 1200, 630, png)
@@ -113,6 +116,11 @@ for (const spec of OG_IMAGES) {
 }
 
 /* -------------------------------------------------------------------- Icons */
+
+if (only.length) {
+  rmSync(work, { recursive: true, force: true })
+  process.exit(0)
+}
 
 // The swoosh alone, on a navy tile. favicon.svg keeps rounded corners; the PNG
 // icons are full-bleed squares, because iOS and Android apply their own mask.

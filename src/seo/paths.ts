@@ -9,6 +9,13 @@ export const PATHS = {
   about: '/nosotros/',
   contact: '/contacto/',
   privacy: '/aviso-de-privacidad/',
+  blog: '/blog/',
 } as const
 
 export type PublicPath = (typeof PATHS)[keyof typeof PATHS]
+
+/** Canonical path of a blog post. */
+export const postPath = (slug: string) => `${PATHS.blog}${slug}/`
+
+/** True for /blog/<slug>/ (not for the /blog/ list itself). */
+export const isPostPath = (pathname: string) => /^\/blog\/[^/]+\/?$/.test(pathname)

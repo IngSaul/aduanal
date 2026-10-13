@@ -1,15 +1,20 @@
-// Audits the prerendered HTML in dist/ against the route registry: SEO head,
-// headings, JSON-LD, sitemap, and the Open Graph / Twitter card tags and images.
+// Audits the prerendered HTML in dist/ — every route the prerender wrote,
+// blog posts included — for the SEO head, headings, JSON-LD, sitemap, the
+// embedded blog data, and the Open Graph / Twitter card tags and images.
 // Exits with code 1 and lists every problem found. No dependencies.
-import { readFile, stat } from 'node:fs/promises'
+// `npm run seo:check` and `npm run og:check` both run it.
+import { readFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
-const { SEO_ROUTES, PRIVATE_PATHS, SITE } = await import(
+const { SEO_ROUTES, PRIVATE_PATHS, SITE, projectId, dataset } = await import(
   pathToFileURL(join(root, 'dist-ssr', 'entry-server.js')).href
 )
+const manifest = JSON.parse(await readFile(join(root, 'dist-ssr', 'prerendered-routes.json'), 'utf8'))
+/** Post covers are served by the Sanity image CDN of this project. */
+const SANITY_IMAGES = `https://cdn.sanity.io/images/${projectId}/${dataset}/`
 
 const errors = []
 const fail = (where, message) => errors.push(`${where}: ${message}`)
@@ -29,7 +34,7 @@ const all = (html, regex) => [...html.matchAll(regex)]
 const attr = (tag, name) => tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1]
 
 const descriptions = new Map()
-const indexable = SEO_ROUTES.filter((route) => route.indexable)
+const indexable = manifest.routes.filter((route) => route.indexable)
 
 /** Width and height from a PNG (IHDR) or JPEG (SOFn) header. */
 function imageSize(buffer) {
@@ -53,13 +58,14 @@ const REQUIRED_SOCIAL = [
   'og:image', 'og:image:secure_url', 'og:image:type', 'og:image:width', 'og:image:height', 'og:image:alt',
   'twitter:card', 'twitter:title', 'twitter:description', 'twitter:image', 'twitter:image:alt',
 ]
+const ARTICLE_TAGS = ['article:published_time', 'article:modified_time']
 const URL_TAGS = ['og:url', 'og:image', 'og:image:secure_url', 'twitter:image']
 const checkedImages = new Map()
 
 /** Open Graph and Twitter card checks shared by every page, indexable or not. */
-async function checkSocial(where, html, canonical) {
+async function checkSocial(where, html, canonical, post = false) {
   const tags = new Map()
-  for (const [, attr, key, content] of all(html, /<meta (property|name)="((?:og|twitter):[^"]+)" content="([^"]*)"/g)) {
+  for (const [, attr, key, content] of all(html, /<meta (property|name)="((?:og|twitter|article):[^"]+)" content="([^"]*)"/g)) {
     if (tags.has(key)) fail(where, `${key} appears more than once`)
     tags.set(key, decode(content))
   }
@@ -67,8 +73,14 @@ async function checkSocial(where, html, canonical) {
 
   for (const key of URL_TAGS) {
     const value = tags.get(key)
-    if (value && !value.startsWith(`${SITE.url}/`)) fail(where, `${key} is not an absolute ${SITE.url} URL: ${value}`)
+    const remoteImage = post && key !== 'og:url' && value?.startsWith(SANITY_IMAGES)
+    if (value && !remoteImage && !value.startsWith(`${SITE.url}/`)) fail(where, `${key} is not an absolute ${SITE.url} URL: ${value}`)
   }
+  const type = tags.get('og:type')
+  if (post) {
+    if (type !== 'article') fail(where, `og:type is ${type} (expected article)`)
+    for (const key of ARTICLE_TAGS) if (!tags.get(key)) fail(where, `missing ${key}`)
+  } else if (type !== 'website') fail(where, `og:type is ${type} (expected website)`)
   if (canonical && tags.get('og:url') !== canonical) fail(where, `og:url ${tags.get('og:url')} differs from canonical ${canonical}`)
   if (tags.get('og:locale') && tags.get('og:locale') !== 'es_MX') fail(where, 'og:locale is not es_MX')
   if (tags.get('twitter:card') && tags.get('twitter:card') !== 'summary_large_image') fail(where, 'twitter:card is not summary_large_image')
@@ -78,23 +90,43 @@ async function checkSocial(where, html, canonical) {
   if (tags.get('og:image') !== tags.get('twitter:image')) fail(where, 'og:image and twitter:image differ')
 
   const image = tags.get('og:image')
-  if (!image?.startsWith(`${SITE.url}/`)) return
-  const file = join(dist, image.slice(SITE.url.length))
+  const remote = image?.startsWith(SANITY_IMAGES)
+  if (!image?.startsWith(`${SITE.url}/`) && !remote) return
+  const file = remote ? image : join(dist, image.slice(SITE.url.length))
   if (!checkedImages.has(file)) {
     try {
-      const buffer = await readFile(file)
-      checkedImages.set(file, { size: imageSize(buffer), bytes: (await stat(file)).size })
+      const buffer = remote
+        ? Buffer.from(await (await fetch(image, { signal: AbortSignal.timeout(20_000) })).arrayBuffer())
+        : await readFile(file)
+      checkedImages.set(file, { size: imageSize(buffer), bytes: buffer.length })
     } catch {
       checkedImages.set(file, null)
     }
   }
   const info = checkedImages.get(file)
-  if (!info) return fail(where, `og:image not found in dist: ${image}`)
+  if (!info) return fail(where, `og:image ${remote ? 'could not be downloaded' : 'not found in dist'}: ${image}`)
   if (!info.size || info.size.width !== 1200 || info.size.height !== 630)
     fail(where, `og:image is ${info.size ? `${info.size.width}×${info.size.height}` : 'unreadable'} (expected 1200×630)`)
   if (info.bytes >= 300 * 1024) fail(where, `og:image weighs ${Math.round(info.bytes / 1024)} KB (must stay under 300 KB)`)
-  const type = image.endsWith('.png') ? 'image/png' : 'image/jpeg'
-  if (tags.get('og:image:type') !== type) fail(where, `og:image:type ${tags.get('og:image:type')} does not match ${type}`)
+  const mime = image.endsWith('.png') ? 'image/png' : 'image/jpeg'
+  if (tags.get('og:image:type') !== mime) fail(where, `og:image:type ${tags.get('og:image:type')} does not match ${mime}`)
+}
+
+/** The embedded `window.__BLOG_DATA__` must parse and belong to the page. */
+function checkBlogData(where, html, required) {
+  const match = html.match(/<script>window\.__BLOG_DATA__=([\s\S]*?)<\/script>/)
+  if (!match) return required ? fail(where, 'missing window.__BLOG_DATA__') : undefined
+  try {
+    const data = JSON.parse(match[1])
+    if (data.path !== where) fail(where, `__BLOG_DATA__ is for ${data.path}`)
+  } catch (error) {
+    fail(where, `__BLOG_DATA__ does not parse (${error.message})`)
+  }
+}
+
+// Every indexable registry page must have been written.
+for (const route of SEO_ROUTES.filter((r) => r.indexable)) {
+  if (!manifest.routes.some((written) => written.path === route.path)) fail(route.path, 'missing from the prerender')
 }
 
 for (const route of indexable) {
@@ -118,7 +150,9 @@ for (const route of indexable) {
   if (description.length !== 1) fail(where, `${description.length} meta descriptions (expected 1)`)
   else {
     const text = decode(description[0][1])
-    if (text.length < 120 || text.length > 170) fail(where, `description is ${text.length} characters (120–170)`)
+    // Registry pages are hand-tuned to 120–170; posts use the editor's excerpt (50–170).
+    const min = route.post ? 50 : 120
+    if (text.length < min || text.length > 170) fail(where, `description is ${text.length} characters (${min}–170)`)
     if (descriptions.has(text)) fail(where, `description repeats ${descriptions.get(text)}`)
     descriptions.set(text, where)
   }
@@ -130,7 +164,8 @@ for (const route of indexable) {
 
   if (!/<meta name="robots" content="index,follow"/.test(html)) fail(where, 'robots meta is not index,follow')
 
-  await checkSocial(where, html, expected)
+  await checkSocial(where, html, expected, route.post)
+  checkBlogData(where, html, route.post || route.path === '/blog/')
 
   for (const [tag] of all(html, /<img\b[^>]*>/g)) {
     if (attr(tag, 'alt') === undefined) fail(where, `<img> without alt: ${tag.slice(0, 80)}`)
@@ -160,6 +195,15 @@ try {
   fail('404.html', 'not generated')
 }
 
+// Fallback shell for posts newer than the build: no canonical, never listed.
+try {
+  const shell = await readFile(join(dist, 'blog-shell.html'), 'utf8')
+  if (/rel="canonical"/.test(shell)) fail('blog-shell.html', 'must not carry a canonical')
+  if (/<div id="root">\s*<\/div>/.test(shell) === false) fail('blog-shell.html', 'root must be empty')
+} catch {
+  fail('blog-shell.html', 'not generated')
+}
+
 // Sitemap: every indexable route, nothing private.
 try {
   const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8')
@@ -171,6 +215,7 @@ try {
   for (const loc of locs) {
     if (!loc.startsWith(`${SITE.url}/`)) fail('sitemap.xml', `URL outside ${SITE.url}: ${loc}`)
     if (blocked.some((path) => loc === `${SITE.url}${path}`)) fail('sitemap.xml', `lists a non-indexable URL: ${loc}`)
+    if (!indexable.some((route) => loc === `${SITE.url}${route.path}`)) fail('sitemap.xml', `lists a page that was not prerendered: ${loc}`)
   }
 } catch {
   fail('sitemap.xml', 'not generated')
@@ -192,6 +237,7 @@ if (errors.length) {
   for (const error of errors) console.error(`  ✗ ${error}`)
   process.exit(1)
 }
+const posts = indexable.filter((route) => route.post).length
 console.log(
-  `SEO check passed: ${indexable.length} indexable routes, sitemap, robots.txt, 404 and ${checkedImages.size} share images.`,
+  `SEO check passed: ${indexable.length} indexable routes (${posts} blog posts from ${manifest.blogSource}), sitemap, robots.txt, 404, blog shell and ${checkedImages.size} share images.`,
 )

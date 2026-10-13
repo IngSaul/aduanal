@@ -73,9 +73,8 @@ export const es = {
       { to: PATHS.services, label: 'Servicios' },
       { to: PATHS.about, label: 'Nosotros' },
       { to: PATHS.contact, label: 'Contacto' },
+      { to: PATHS.blog, label: 'Noticias' },
     ],
-    /** Placeholder anchor until the blog has content. */
-    blog: { href: '#blog', label: 'Blog' },
     cta: 'Solicitar asesoría',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',
@@ -149,6 +148,10 @@ export const es = {
       { title: 'Personalización', text: 'Un servicio alineado a las necesidades específicas de cada cliente.' },
       { title: 'Calidad', text: 'Un equipo altamente especializado detrás de cada servicio.' },
     ],
+
+    newsEyebrow: '06 — Noticias',
+    newsTitle: 'Últimas noticias',
+    newsCta: 'Ver todas las noticias',
 
     ctaTitle: '¿Tu empresa necesita asesoría en comercio exterior?',
     ctaLead: 'Cuéntanos sobre tu operación y te ayudamos a definir la estrategia adecuada.',
@@ -506,6 +509,28 @@ export const es = {
         ],
       },
     ] as { title: string; body: string[]; items?: string[]; after?: string[] }[],
+  },
+
+  blog: {
+    eyebrow: 'Noticias',
+    title: 'Noticias de comercio exterior',
+    lead: 'Novedades de Andeus Group sobre comercio exterior, aduanas y logística.',
+    heroImage: 'terminal-amanecer',
+    heroImageAlt: 'Terminal de contenedores con sus grúas al amanecer, vista desde el agua',
+    listTitle: 'Publicaciones recientes',
+    loading: 'Cargando noticias',
+    loadMore: 'Cargar más noticias',
+    loadingMore: 'Cargando más noticias',
+    loadMoreError: 'No pudimos cargar más noticias. Inténtalo de nuevo.',
+    emptyTitle: 'Aún no hay noticias publicadas',
+    emptyLead: 'Muy pronto compartiremos aquí novedades de comercio exterior, aduanas y logística.',
+    errorTitle: 'No pudimos cargar las noticias',
+    errorLead: 'Revisa tu conexión e inténtalo de nuevo.',
+    postErrorTitle: 'No pudimos cargar esta noticia',
+    retry: 'Reintentar',
+    back: 'Volver a Noticias',
+    breadcrumbLabel: 'Migas de pan',
+    home: 'Inicio',
   },
 
   notFound: {

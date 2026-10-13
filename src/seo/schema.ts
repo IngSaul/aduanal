@@ -69,6 +69,58 @@ function offerCatalog(route: SeoRoute) {
   }
 }
 
+/** The /blog/ listing, with the posts it shows. */
+function blog(route: SeoRoute) {
+  const url = `${SITE.url}${route.path}`
+  return {
+    '@type': 'Blog',
+    '@id': `${url}#blog`,
+    url,
+    name: route.h1,
+    description: route.description,
+    inLanguage: SITE.locale,
+    publisher: { '@id': ORG_ID },
+    blogPost: (route.blogPosts ?? []).map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      url: `${SITE.url}${post.path}`,
+      datePublished: post.publishedAt,
+    })),
+  }
+}
+
+function blogPosting(route: SeoRoute) {
+  const url = `${SITE.url}${route.path}`
+  return {
+    '@type': 'BlogPosting',
+    '@id': `${url}#post`,
+    url,
+    mainEntityOfPage: url,
+    headline: route.h1,
+    description: route.description,
+    image: route.article ? [route.article.image] : undefined,
+    datePublished: route.article?.publishedTime,
+    dateModified: route.article?.modifiedTime,
+    inLanguage: SITE.locale,
+    author: { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID },
+    isPartOf: { '@id': `${SITE.url}/blog/#blog` },
+  }
+}
+
+/** Mirrors the breadcrumb trail shown on the page. */
+function breadcrumbList(route: SeoRoute) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: (route.breadcrumbs ?? []).map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: `${SITE.url}${crumb.path}`,
+    })),
+  }
+}
+
 export function buildSchema(route: SeoRoute) {
   const graph = route.schema.map((type) => {
     switch (type) {
@@ -78,6 +130,12 @@ export function buildSchema(route: SeoRoute) {
         return professionalService()
       case 'OfferCatalog':
         return offerCatalog(route)
+      case 'Blog':
+        return blog(route)
+      case 'BlogPosting':
+        return blogPosting(route)
+      case 'BreadcrumbList':
+        return breadcrumbList(route)
     }
   })
   return graph.length ? { '@context': 'https://schema.org', '@graph': graph } : null

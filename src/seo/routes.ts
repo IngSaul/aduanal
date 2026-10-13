@@ -9,7 +9,7 @@ import { PATHS } from './paths'
  * unique per page, with a benefit and a call to action.
  */
 
-export type SchemaType = 'WebSite' | 'ProfessionalService' | 'OfferCatalog'
+export type SchemaType = 'WebSite' | 'ProfessionalService' | 'OfferCatalog' | 'Blog' | 'BlogPosting' | 'BreadcrumbList'
 
 export type SeoRoute = {
   path: string
@@ -26,9 +26,18 @@ export type SeoRoute = {
   /** Share card. Falls back to `title` / `description` when absent. */
   ogTitle?: string
   ogDescription?: string
-  /** Root-relative 1200×630 JPG under `public/og/`, versioned in the name. */
+  /** 1200×630 JPG: root-relative under `public/og/`, or an absolute Sanity CDN URL for posts. */
   ogImage: string
   ogImageAlt: string
+  /** `article` only for blog posts. */
+  ogType?: 'website' | 'article'
+
+  /* Blog-only data, set by src/seo/blog.ts at prerender time. */
+  article?: { publishedTime: string; modifiedTime: string; image: string }
+  breadcrumbs?: { name: string; path: string }[]
+  blogPosts?: { title: string; path: string; publishedAt: string }[]
+  /** Sitemap lastmod (ISO). Defaults to the build date. */
+  lastmod?: string
 }
 
 /** Brand card for pages without their own image (and every noindex page). */
@@ -118,6 +127,22 @@ export const SEO_ROUTES: SeoRoute[] = [
     ogTitle: 'Aviso de privacidad | Andeus Group',
     ogDescription: 'Cómo Andeus Group protege tus datos personales y cómo ejercer tus derechos ARCO.',
     ...OG_DEFAULT,
+  },
+  {
+    path: PATHS.blog,
+    title: 'Noticias de comercio exterior y aduanas | Andeus Group',
+    description:
+      'Noticias y novedades de Andeus Group sobre comercio exterior, despacho aduanal y logística en México. Lee las publicaciones más recientes de nuestro equipo.',
+    h1: es.blog.title,
+    indexable: true,
+    priority: 0.6,
+    changefreq: 'weekly',
+    schema: [...BASE_SCHEMA, 'Blog'],
+    lcpImage: es.blog.heroImage,
+    ogTitle: 'Noticias | Andeus Group',
+    ogDescription: 'Novedades de comercio exterior, aduanas y logística de Andeus Group.',
+    ogImage: '/og/og-noticias-v1.jpg',
+    ogImageAlt: 'Logotipo de Andeus Group sobre una terminal al amanecer, con el texto «Noticias de comercio exterior»',
   },
 ]
 

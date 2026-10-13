@@ -280,6 +280,8 @@ export function Card({
  */
 export function Img({
   src,
+  srcSet,
+  sizes,
   alt,
   width,
   height,
@@ -288,6 +290,8 @@ export function Img({
   priority = false,
 }: {
   src: string
+  srcSet?: string
+  sizes?: string
   alt: string
   width?: number
   height?: number
@@ -308,6 +312,8 @@ export function Img({
       <img
         ref={ref}
         src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt}
         width={width}
         height={height}

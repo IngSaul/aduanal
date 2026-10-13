@@ -1,6 +1,8 @@
 import { Navigate, type RouteObject } from 'react-router'
 import RootLayout from './RootLayout'
 import About from './pages/About'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 import Contact from './pages/Contact'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
@@ -25,6 +27,8 @@ export const routes: RouteObject[] = [
       { path: 'nosotros', Component: About },
       { path: 'contacto', Component: Contact },
       { path: 'aviso-de-privacidad', Component: Privacy },
+      { path: 'blog', Component: Blog },
+      { path: 'blog/:slug', Component: BlogPost },
       { path: '*', Component: NotFound },
     ],
   },

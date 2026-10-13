@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { CONTACT, photoSource } from '../content/copy'
 import { PATHS } from '../seo/paths'
+import { PostCard } from '../components/blog/PostCard'
+import { useLatestPosts } from '../lib/blogData'
 import { useCopy } from '../i18n'
 import { FeatureCard, Timeline } from '../components/cards'
 import {
@@ -270,10 +272,42 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* ---------------------------------------------------------- Noticias */}
+      <LatestNews />
+
       {/* ------------------------------------------------------------- CTA */}
       <FinalCta />
 
     </>
+  )
+}
+
+/** The three latest posts. Renders nothing until there is at least one. */
+function LatestNews() {
+  const copy = useCopy()
+  const posts = useLatestPosts()
+  if (posts.length === 0) return null
+
+  return (
+    <Section tone="mist">
+      <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <Reveal className="flex-1">
+          <SectionTitle eyebrow={copy.home.newsEyebrow} title={copy.home.newsTitle} />
+        </Reveal>
+        <Reveal delay={120}>
+          <Button to={PATHS.blog} variant="outline">
+            {copy.home.newsCta}
+          </Button>
+        </Reveal>
+      </div>
+      <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post, i) => (
+          <Reveal as="li" key={post._id} delay={i * 80} className="h-full">
+            <PostCard post={post} />
+          </Reveal>
+        ))}
+      </ul>
+    </Section>
   )
 }
 

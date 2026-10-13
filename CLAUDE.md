@@ -20,9 +20,16 @@
 - Never invent business data in schema (no ratings, hours, prices or people). Open TODOs are marked `TODO(negocio)` / `TODO(hosting)`.
 - Open Graph lives in the same registry (`ogTitle` ≤ 60, `ogDescription` ≤ 110, `ogImage`, `ogImageAlt`); `socialTags()` in `src/seo/head.ts` feeds both the prerender and the client sync. Share images are committed in `public/og/` and made by `npm run og:images` (headless Chrome + ImageMagick) — never at build time. Bump the `-vN` in the file name whenever an image changes.
 
+## Blog (Sanity)
+
+- Only the "Noticias" blog is CMS-managed (Sanity project `cu9ucb18`, dataset `production`, public, read-only from the site — never a token in `VITE_*`). Everything else stays in `copy.ts`. Studio lives in `/studio` with its own package.json; frontend deps are only `@sanity/client`, `@portabletext/react`, `@sanity/image-url`.
+- Blog data reaches pages through `BlogDataProvider` (`src/lib/blogData.tsx`): the prerender fetches it, renders with it and embeds `window.__BLOG_DATA__`; hooks use it as initial state on that path and fetch on client navigation. Keep server and client output identical (dates use a fixed `America/Mexico_City` time zone).
+- Post SEO comes from `src/seo/blog.ts` as `SeoRoute`s, so it flows through the same `renderHead`/`socialTags`/`buildSchema`. `useRouteMeta` skips `/blog/<slug>/`; `BlogPost` applies its head once the post is known.
+- The build must not fail when Sanity is down or unconfigured (empty `/blog/`, warning). `.htaccess` keeps a SPA fallback only for `/blog/<slug>/` → `blog-shell.html`. Sample posts (`src/lib/blog-fixtures.ts`) are dev/local-check only: `VITE_BLOG_FIXTURES=true` (dev) or `BLOG_FIXTURES=1` (local build — never publish that dist).
+
 ## Navigation
 
-- Router links live in `copy.nav.items`. "Blog" (`copy.nav.blog`) is a plain `#blog` anchor in the navbar, mobile drawer and footer until the blog has content; when it does, turn it into a route there.
+- Router links live in `copy.nav.items` (navbar, mobile drawer and footer all map it). "Noticias" is a NavLink to `/blog/`, active on posts too.
 
 ## Images
 

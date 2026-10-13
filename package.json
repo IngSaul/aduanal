@@ -8,9 +8,13 @@
     "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "seo:check": "node scripts/seo-check.mjs",
+    "og:check": "node scripts/seo-check.mjs",
     "og:images": "node scripts/og-images.mjs"
   },
   "dependencies": {
+    "@portabletext/react": "^8.0.1",
+    "@sanity/client": "^8.9.0",
+    "@sanity/image-url": "^2.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^8.3.0"

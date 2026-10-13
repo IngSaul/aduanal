@@ -1,12 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import { BlogDataProvider } from './lib/blogData'
 import './index.css'
 
 const root = document.getElementById('root')!
 const app = (
   <React.StrictMode>
-    <App />
+    <BlogDataProvider value={window.__BLOG_DATA__ ?? null}>
+      <App />
+    </BlogDataProvider>
   </React.StrictMode>
 )
 

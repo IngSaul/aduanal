@@ -12,19 +12,20 @@ export const robotsContent = (route: SeoRoute) => (route.indexable ? 'index,foll
 export type SocialTag = { attr: 'property' | 'name'; key: string; content: string }
 
 /**
- * Open Graph and Twitter card tags for a route, all absolute https URLs on the
- * production domain. Noindex pages share the brand card and point to the home.
+ * Open Graph and Twitter card tags for a route, all absolute https URLs: the
+ * production domain, or the Sanity image CDN for a post's cover. Noindex pages
+ * share the brand card and point to the home.
  */
 export function socialTags(route: SeoRoute): SocialTag[] {
   const title = route.ogTitle ?? route.title
   const description = route.ogDescription ?? route.description
-  const image = `${SITE.url}${route.ogImage}`
+  const image = route.ogImage.startsWith('https://') ? route.ogImage : `${SITE.url}${route.ogImage}`
   const url = route.indexable ? canonicalUrl(route) : `${SITE.url}/`
   const og = (key: string, content: string): SocialTag => ({ attr: 'property', key, content })
   const tw = (key: string, content: string): SocialTag => ({ attr: 'name', key, content })
 
   return [
-    og('og:type', 'website'),
+    og('og:type', route.ogType ?? 'website'),
     og('og:site_name', SITE.name),
     og('og:locale', 'es_MX'),
     og('og:url', url),
@@ -36,6 +37,12 @@ export function socialTags(route: SeoRoute): SocialTag[] {
     og('og:image:width', '1200'),
     og('og:image:height', '630'),
     og('og:image:alt', route.ogImageAlt),
+    ...(route.ogType === 'article' && route.article
+      ? [
+          og('article:published_time', route.article.publishedTime),
+          og('article:modified_time', route.article.modifiedTime),
+        ]
+      : []),
     tw('twitter:card', 'summary_large_image'),
     ...(SITE.xHandle ? [tw('twitter:site', SITE.xHandle)] : []),
     tw('twitter:title', title),
