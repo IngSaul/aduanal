@@ -20,6 +20,7 @@ Se publica el contenido de `dist/`, **excepto `dist/og-preview.html`**, que es s
 - `src/seo/routes.ts`: title, description, h1, indexable, prioridad del sitemap, schema e imagen OG de cada ruta. Una ruta pública nueva se agrega aquí, en `src/seo/paths.ts` y en `src/routes.tsx`.
 - `src/seo/head.ts` y `src/seo/schema.ts`: generan el `<head>` y el JSON-LD que el prerender inyecta en `<!--app-head-->`.
 - Search Console y GA4 quedan apagados: se activan llenando `googleSiteVerification` y `ga4Id` en `site.ts`.
+- **Indexación:** mientras el sitio vive en el demo (`https://aduanal.avalonnova.com`), `allowIndexing: false` en `src/seo/site.ts` pone `noindex,follow` en todas las páginas. Al lanzar en andeus.mx: cambiarlo a `true`, `npm run build`, `npm run seo:check` y desplegar.
 
 ## Open Graph (vista previa al compartir)
 
@@ -51,7 +52,7 @@ El Studio solo muestra **Noticias** y **Categorías**, en español.
 
 1. **Proyecto:** ya existe (`cu9ucb18`, dataset `production`). Si se crea otro: https://www.sanity.io/manage → *Create project* → dataset `production`, y actualiza `.env` y `studio/env.ts`.
 2. **Dataset público:** *Datasets* → `production` → *Visibility: Public*. El sitio lee sin token.
-3. **CORS:** *API* → *CORS origins* → agrega sin credenciales: `http://localhost:8443`, el dominio del demo (TODO: URL del demo) y `https://andeus.mx`. Para el Studio local, `http://localhost:3333` con credenciales.
+3. **CORS:** *API* → *CORS origins* → agrega sin credenciales: `http://localhost:8443`, el dominio del demo `https://aduanal.avalonnova.com` (ya agregado) y `https://andeus.mx`. Para el Studio local, `http://localhost:3333` con credenciales.
 4. **Desplegar el Studio:** `cd studio && npx sanity deploy` (usa `studioHost: 'andeus'` → https://andeus.sanity.studio). Después del primer deploy, copia el `appId` que muestra la consola a `deployment.appId` en `studio/sanity.cli.ts`.
 5. **Invitar a la clienta:** *Members* → *Invite* → su correo con el rol **Editor** (puede crear, editar y publicar noticias, no cambiar la configuración del proyecto).
 

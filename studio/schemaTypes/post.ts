@@ -66,7 +66,10 @@ export const post = defineType({
       type: 'text',
       rows: 3,
       group: 'content',
-      validation: (rule) => rule.required().max(200).error('Escribe un extracto de hasta 200 caracteres.'),
+      validation: (rule) => [
+        rule.required().max(200).error('Escribe un extracto de hasta 200 caracteres.'),
+        rule.min(50).warning('Un extracto de menos de 50 caracteres se ve pobre en Google. Intenta 1 o 2 frases completas.'),
+      ],
     }),
     defineField({
       name: 'category',

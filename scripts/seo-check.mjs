@@ -18,6 +18,9 @@ const SANITY_IMAGES = `https://cdn.sanity.io/images/${projectId}/${dataset}/`
 
 const errors = []
 const fail = (where, message) => errors.push(`${where}: ${message}`)
+/** Editorial issues in content the client writes: reported, never blocking a deploy. */
+const warnings = []
+const warn = (where, message) => warnings.push(`${where}: ${message}`)
 
 const decode = (text) =>
   text
@@ -150,9 +153,11 @@ for (const route of indexable) {
   if (description.length !== 1) fail(where, `${description.length} meta descriptions (expected 1)`)
   else {
     const text = decode(description[0][1])
-    // Registry pages are hand-tuned to 120–170; posts use the editor's excerpt (50–170).
-    const min = route.post ? 50 : 120
-    if (text.length < min || text.length > 170) fail(where, `description is ${text.length} characters (${min}–170)`)
+    // Registry pages are hand-tuned to 120–170 (error). Posts use the editor's
+    // excerpt: outside 50–170 it is a warning to fix in the Studio.
+    if (route.post) {
+      if (text.length < 50 || text.length > 170) warn(where, `description is ${text.length} characters (aim for 50–170: write a longer excerpt or an SEO description in the Studio)`)
+    } else if (text.length < 120 || text.length > 170) fail(where, `description is ${text.length} characters (120–170)`)
     if (descriptions.has(text)) fail(where, `description repeats ${descriptions.get(text)}`)
     descriptions.set(text, where)
   }
@@ -162,7 +167,9 @@ for (const route of indexable) {
   if (canonicals.length !== 1) fail(where, `${canonicals.length} canonical links (expected 1)`)
   else if (canonicals[0][1] !== expected) fail(where, `canonical ${canonicals[0][1]} (expected ${expected})`)
 
-  if (!/<meta name="robots" content="index,follow"/.test(html)) fail(where, 'robots meta is not index,follow')
+  // Before launch (SITE.allowIndexing false) every page must be noindex,follow.
+  const robots = SITE.allowIndexing ? 'index,follow' : 'noindex,follow'
+  if (!html.includes(`<meta name="robots" content="${robots}"`)) fail(where, `robots meta is not ${robots}`)
 
   await checkSocial(where, html, expected, route.post)
   checkBlogData(where, html, route.post || route.path === '/blog/')
@@ -232,12 +239,18 @@ try {
   fail('robots.txt', 'missing')
 }
 
+if (warnings.length) {
+  console.warn(`${warnings.length} editorial warning(s):`)
+  for (const warning of warnings) console.warn(`  ⚠ ${warning}`)
+}
+
 if (errors.length) {
   console.error(`SEO check failed with ${errors.length} problem(s):`)
   for (const error of errors) console.error(`  ✗ ${error}`)
   process.exit(1)
 }
 const posts = indexable.filter((route) => route.post).length
+if (!SITE.allowIndexing) console.log('Note: SITE.allowIndexing is false — every page is noindex,follow until launch.')
 console.log(
   `SEO check passed: ${indexable.length} indexable routes (${posts} blog posts from ${manifest.blogSource}), sitemap, robots.txt, 404, blog shell and ${checkedImages.size} share images.`,
 )

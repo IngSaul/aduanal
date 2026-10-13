@@ -6,7 +6,9 @@ import { SITE } from './site'
 /** Absolute canonical URL of a route. */
 export const canonicalUrl = (route: SeoRoute) => `${SITE.url}${route.path}`
 
-export const robotsContent = (route: SeoRoute) => (route.indexable ? 'index,follow' : 'noindex,follow')
+/** `index,follow` only for indexable routes, and only once the site has launched (`SITE.allowIndexing`). */
+export const robotsContent = (route: SeoRoute) =>
+  route.indexable && SITE.allowIndexing ? 'index,follow' : 'noindex,follow'
 
 /** A social tag: Open Graph uses `property`, Twitter uses `name`. */
 export type SocialTag = { attr: 'property' | 'name'; key: string; content: string }

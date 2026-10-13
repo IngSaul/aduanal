@@ -22,6 +22,12 @@ export const SITE = {
   name: 'Andeus Group',
   /** Final production origin, no trailing slash. Non-www is the canonical host. */
   url: 'https://andeus.mx',
+  /**
+   * LAUNCH SWITCH. `false` while the site lives on the demo domain
+   * (https://aduanal.avalonnova.com): every page carries `noindex,follow`.
+   * Set to `true` when it goes live on andeus.mx, rebuild and redeploy.
+   */
+  allowIndexing: false,
   locale: 'es-MX',
   description:
     'Despacho de consultores especializados en comercio exterior, logística y transporte: consultoría, capacitación, auditoría, certificación NOM, trámites, despacho aduanal y logística.',

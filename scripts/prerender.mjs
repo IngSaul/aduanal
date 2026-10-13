@@ -97,7 +97,7 @@ await writePage(
     [
       `<title>${escAttr(blogRoute.title)}</title>`,
       `<meta name="description" content="${escAttr(blogRoute.description)}" />`,
-      '<meta name="robots" content="index,follow" />',
+      `<meta name="robots" content="${SITE.allowIndexing ? 'index,follow' : 'noindex,follow'}" />`,
     ].join('\n    '),
     '',
   ),
