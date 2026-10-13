@@ -1,4 +1,5 @@
 import { CONTACT } from '../content/copy'
+import { PATHS } from '../seo/paths'
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
 import { InfoCard } from '../components/cards'
@@ -17,7 +18,7 @@ export default function Contact() {
         eyebrow={page.eyebrow}
         title={page.title}
         lead={page.lead}
-        image="puerto-ciudad-gruas-dia"
+        image={page.heroImage}
         imageAlt={page.heroImageAlt}
       />
 
@@ -57,6 +58,12 @@ export default function Contact() {
                   </Button>
                 </div>
               </div>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <Button to={PATHS.services} variant="outline">
+                {copy.home.servicesCta}
+              </Button>
             </Reveal>
           </div>
 

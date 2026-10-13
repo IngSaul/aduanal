@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { photo } from '../content/copy'
+import { photoSource } from '../content/copy'
 import { Eyebrow, Img } from './ui'
 
 /** Compact dark hero used by every page other than Home. */
@@ -24,9 +24,9 @@ export default function PageHero({
   return (
     <section className="relative isolate overflow-hidden bg-navy">
       <Img
-        src={photo(image)}
+        {...photoSource(image)}
         alt={imageAlt}
-        loading="eager"
+        priority
         className="absolute inset-0 h-full w-full"
         imgClassName={`opacity-60 ${imagePosition}`}
       />

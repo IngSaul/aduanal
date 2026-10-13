@@ -1,5 +1,6 @@
 import { useCopy } from '../i18n'
 import { Button } from '../components/ui'
+import { PATHS } from '../seo/paths'
 
 export default function NotFound() {
   const copy = useCopy()
@@ -16,7 +17,7 @@ export default function NotFound() {
           {copy.notFound.lead}
         </p>
         <div className="mt-9">
-          <Button to="/" variant="accent" size="lg">
+          <Button to={PATHS.home} variant="accent" size="lg">
             {copy.notFound.cta}
           </Button>
         </div>

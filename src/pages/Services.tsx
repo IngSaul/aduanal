@@ -1,4 +1,5 @@
-import { CONTACT, photo } from '../content/copy'
+import { CONTACT, photoSource } from '../content/copy'
+import { PATHS } from '../seo/paths'
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
 import {
@@ -23,13 +24,13 @@ export default function Services() {
         eyebrow={copy.servicesPage.eyebrow}
         title={copy.servicesPage.title}
         lead={copy.servicesPage.lead}
-        image="puerto-ciudad-panoramica"
+        image={copy.servicesPage.heroImage}
         imageAlt={copy.servicesPage.heroImageAlt}
       >
         <Button href={CONTACT.whatsapp} variant="accent">
           {copy.common.quote}
         </Button>
-        <Button to="/contacto" variant="onDark">
+        <Button to={PATHS.contact} variant="onDark">
           {copy.common.contactForm}
         </Button>
       </PageHero>
@@ -76,7 +77,7 @@ export default function Services() {
                 <Reveal className={flip ? 'lg:order-2' : ''}>
                   <div className="relative">
                     <Img
-                      src={photo(service.image)}
+                      {...photoSource(service.image)}
                       alt={service.imageAlt}
                       className="aspect-[5/4] w-full rounded-card"
                     />
@@ -145,7 +146,7 @@ export default function Services() {
               <Button href={CONTACT.whatsapp} variant="accent" size="lg">
                 {copy.common.quote}
               </Button>
-              <Button to="/contacto" variant="onDark" size="lg">
+              <Button to={PATHS.contact} variant="onDark" size="lg">
                 {copy.common.contactForm}
               </Button>
             </div>

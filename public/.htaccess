@@ -1,0 +1,54 @@
+# Andeus Group — Apache / cPanel.
+# TODO(hosting): the client has not confirmed the server type yet. The nginx
+# equivalent of every rule below is in README.md.
+
+Options -MultiViews -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # One canonical origin: HTTPS and no www, with a permanent redirect.
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://andeus.mx%{REQUEST_URI} [R=301,L]
+
+  # Prerendered pages live in folders: /servicios -> /servicios/
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ https://andeus.mx/$1/ [R=301,L]
+
+  # Retired section.
+  RewriteRule ^industrias/?$ https://andeus.mx/ [R=301,L]
+
+  # Every public route is prerendered, so there is no SPA fallback to
+  # index.html: an unknown URL gets a real 404 with /404.html.
+</IfModule>
+
+# Compression: Brotli when the module exists, gzip otherwise.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/javascript application/json application/ld+json application/xml image/svg+xml
+</IfModule>
+<IfModule !mod_brotli.c>
+  <IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/ld+json application/xml image/svg+xml
+  </IfModule>
+</IfModule>
+
+<IfModule mod_headers.c>
+  # HTML always revalidates so a deploy shows up at once.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  # Photos and logo keep their names between deploys: one month.
+  <FilesMatch "\.(webp|avif|png|jpe?g|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # Vite assets carry a content hash in the file name: one year, immutable.
+  <If "%{REQUEST_URI} =~ m#^/assets/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>

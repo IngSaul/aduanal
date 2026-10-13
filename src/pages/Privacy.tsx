@@ -1,6 +1,7 @@
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
-import { Reveal, Section } from '../components/ui'
+import { Button, Reveal, Section } from '../components/ui'
+import { PATHS } from '../seo/paths'
 
 export default function Privacy() {
   const copy = useCopy()
@@ -12,7 +13,7 @@ export default function Privacy() {
         eyebrow={page.eyebrow}
         title={page.title}
         lead={page.lead}
-        image="puerto-gruas-noche"
+        image={page.heroImage}
         imageAlt={page.heroImageAlt}
       />
 
@@ -56,6 +57,12 @@ export default function Privacy() {
                 ))}
               </section>
             ))}
+
+            <div className="mt-14 border-t border-navy/10 pt-10">
+              <Button to={PATHS.contact} variant="outline">
+                {copy.common.contactForm}
+              </Button>
+            </div>
           </article>
         </Reveal>
       </Section>

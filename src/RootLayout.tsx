@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import WhatsAppButton from './components/WhatsAppButton'
+import { useRouteMeta } from './seo/useRouteMeta'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -33,6 +34,8 @@ function ScrollToTop() {
 }
 
 export default function RootLayout() {
+  useRouteMeta()
+
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-white">
       <ScrollToTop />

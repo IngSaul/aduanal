@@ -1,4 +1,5 @@
-import { CONTACT, photo } from '../content/copy'
+import { CONTACT, photoSource } from '../content/copy'
+import { PATHS } from '../seo/paths'
 import { useCopy } from '../i18n'
 import PageHero from '../components/PageHero'
 import { Timeline, ValueCard } from '../components/cards'
@@ -18,7 +19,7 @@ export default function About() {
         eyebrow={about.eyebrow}
         title={about.title}
         lead={about.lead}
-        image="terminal-gruas-contraluz"
+        image={about.heroImage}
         imagePosition="object-[center_72%]"
         imageAlt={about.heroImageAlt}
       />
@@ -29,7 +30,7 @@ export default function About() {
           <Reveal>
             <div className="relative lg:sticky lg:top-28">
               <Img
-                src={photo('buque-vista-aerea')}
+                {...photoSource('buque-vista-aerea')}
                 alt={about.storyImageAlt}
                 className="aspect-square w-full rounded-card"
               />
@@ -48,6 +49,11 @@ export default function About() {
                   {paragraph}
                 </p>
               ))}
+            </div>
+            <div className="mt-10">
+              <Button to={PATHS.services} variant="outline">
+                {copy.common.services}
+              </Button>
             </div>
           </Reveal>
         </div>
@@ -81,9 +87,14 @@ export default function About() {
               <h3 className="text-[19px] font-bold tracking-[-0.02em] text-navy">{about.ctaTitle}</h3>
               <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-steel">{about.ctaLead}</p>
             </div>
-            <Button href={CONTACT.whatsapp} variant="accent">
-              {copy.common.quote}
-            </Button>
+            <div className="flex flex-wrap gap-3">
+              <Button href={CONTACT.whatsapp} variant="accent">
+                {copy.common.quote}
+              </Button>
+              <Button to={PATHS.contact} variant="outline">
+                {copy.common.contactForm}
+              </Button>
+            </div>
           </div>
         </Reveal>
       </Section>

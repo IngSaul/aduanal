@@ -11,6 +11,14 @@
 - Every string lives in `src/content/copy.ts` (read through `useCopy()`); components hold no copy. Section eyebrows are numbered (`01 — …`), so renumber the page when a section is added or removed.
 - Never mention the client's customers anywhere on the site — no names, logos or "empresas que confían en nosotros" sections. The client has no consent to show them. The same goes for third-party brands that are legible in photos.
 
+## SEO and prerender
+
+- `npm run build` = client build + SSR build (`dist-ssr/`) + `scripts/prerender.mjs`, which writes every public route to `dist/<path>/index.html`, plus `404.html` and `sitemap.xml`. Run `npm run seo:check` after it; it must pass.
+- Page metadata lives only in `src/seo/routes.ts` (title 50–60 chars ending in "| Andeus Group", description 140–160, h1 read from the copy, schema, sitemap fields, empty `ogImage` for the OG step). NAP data lives only in `src/seo/site.ts`; `copy.ts` derives `CONTACT` from it.
+- Canonical paths have a trailing slash and come from `PATHS` in `src/seo/paths.ts` — use it for every internal link. A new public page needs an entry in `paths.ts`, `seo/routes.ts` and `src/routes.tsx`.
+- The app hydrates prerendered HTML: no `window`/`document` outside effects, no random or time-dependent render output. Above-the-fold `Reveal`s use `onLoad` (CSS-only animation) so the LCP never waits for JS; the hero `Img` uses `priority`.
+- Never invent business data in schema (no ratings, hours, prices or people). Open TODOs are marked `TODO(negocio)` / `TODO(hosting)`.
+
 ## Navigation
 
 - Router links live in `copy.nav.items`. "Blog" (`copy.nav.blog`) is a plain `#blog` anchor in the navbar, mobile drawer and footer until the blog has content; when it does, turn it into a route there.

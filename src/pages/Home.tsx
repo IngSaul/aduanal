@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { CONTACT, photo } from '../content/copy'
+import { CONTACT, photoSource } from '../content/copy'
+import { PATHS } from '../seo/paths'
 import { useCopy } from '../i18n'
 import { FeatureCard, Timeline } from '../components/cards'
 import {
@@ -12,8 +13,6 @@ import {
   IconTruck,
 } from '../components/icons'
 import { Button, Eyebrow, Highlight, Img, Reveal, Section, SectionTitle } from '../components/ui'
-
-const HERO_IMAGE = 'hero-puerto-grua-ciudad'
 
 /** Icons for the trust block. Order matches `copy.values`. */
 const VALUE_ICONS = [IconBriefcase, IconShield, IconTarget, IconCompass]
@@ -56,9 +55,9 @@ export default function Home() {
           style={{ transform: `translateY(${offset}px)` }}
         >
           <Img
-            src={photo(HERO_IMAGE)}
+            {...photoSource(copy.home.heroImage)}
             alt={copy.home.heroImageAlt}
-            loading="eager"
+            priority
             className="h-full w-full"
             imgClassName="opacity-65"
           />
@@ -71,25 +70,25 @@ export default function Home() {
 
         <div className="container-page relative w-full pt-40 pb-16 md:pb-24">
           <div className="max-w-4xl">
-            <Reveal>
+            <Reveal onLoad>
               <Eyebrow dark>{copy.home.heroEyebrow}</Eyebrow>
             </Reveal>
-            <Reveal delay={90}>
+            <Reveal onLoad delay={90}>
               <h1 className="mt-7 text-[clamp(2.1rem,6vw,4.6rem)] leading-[1.05] font-bold tracking-[-0.035em] text-white">
                 <Highlight parts={copy.home.heroTitle} />
               </h1>
             </Reveal>
-            <Reveal delay={180}>
+            <Reveal onLoad delay={180}>
               <p className="mt-7 max-w-2xl border-l-2 border-gold pl-5 text-[15px] leading-[1.85] text-light/80 md:text-[17px]">
                 {copy.home.heroSubtitle}
               </p>
             </Reveal>
-            <Reveal delay={270}>
+            <Reveal onLoad delay={270}>
               <div className="mt-10 flex flex-wrap gap-3">
                 <Button href={CONTACT.whatsapp} variant="accent" size="lg">
                   {copy.common.quoteLong}
                 </Button>
-                <Button to="/servicios" variant="onDark" size="lg">
+                <Button to={PATHS.services} variant="onDark" size="lg">
                   {copy.common.services}
                 </Button>
               </div>
@@ -131,7 +130,7 @@ export default function Home() {
                 <div className="group relative isolate flex h-full min-h-[300px] flex-col overflow-hidden bg-navy p-7">
                   {/* Decorative backdrop: blurred so it reads as texture, sharpening on hover. */}
                   <Img
-                    src={photo(value.image)}
+                    {...photoSource(value.image)}
                     alt=""
                     className="absolute inset-0 -z-10 h-full w-full"
                     imgClassName="scale-110 blur-[3px] transition duration-700 ease-out group-hover:scale-105 group-hover:blur-[1px]"
@@ -170,7 +169,7 @@ export default function Home() {
             />
           </Reveal>
           <Reveal delay={120}>
-            <Button to="/servicios" variant="outline">
+            <Button to={PATHS.services} variant="outline">
               {copy.home.servicesCta}
             </Button>
           </Reveal>
@@ -184,8 +183,8 @@ export default function Home() {
                 icon={SERVICE_ICONS[i]}
                 title={service.title}
                 text={service.short}
-                to={`/servicios#${service.id}`}
-                image={photo(service.image)}
+                to={`${PATHS.services}#${service.id}`}
+                image={photoSource(service.image)}
               />
             </Reveal>
           ))}
@@ -299,7 +298,7 @@ function FinalCta() {
               <Button href={CONTACT.whatsapp} variant="accent" size="lg">
                 {copy.home.ctaPrimary}
               </Button>
-              <Button to="/contacto" variant="onDark" size="lg">
+              <Button to={PATHS.contact} variant="onDark" size="lg">
                 {copy.common.contactForm}
               </Button>
             </div>

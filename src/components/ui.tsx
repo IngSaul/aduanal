@@ -11,24 +11,30 @@ import type { Accented } from '../content/copy'
 
 /* ------------------------------------------------------------------ Reveal */
 
-/** Fades and lifts its children in once, when they first enter the viewport. */
+/**
+ * Fades and lifts its children in once, when they first enter the viewport.
+ * `onLoad` is for above-the-fold content: the same motion runs as a pure CSS
+ * animation from the first paint, so it never waits for hydration (LCP).
+ */
 export function Reveal({
   children,
   delay = 0,
   className = '',
   as: Tag = 'div',
+  onLoad = false,
 }: {
   children: ReactNode
   delay?: number
   className?: string
   as?: ElementType
+  onLoad?: boolean
 }) {
   const ref = useRef<HTMLElement | null>(null)
   const [shown, setShown] = useState(false)
 
   useEffect(() => {
     const node = ref.current
-    if (!node) return
+    if (!node || onLoad) return
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -40,7 +46,15 @@ export function Reveal({
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [])
+  }, [onLoad])
+
+  if (onLoad) {
+    return (
+      <Tag className={`reveal-load ${className}`} style={{ animationDelay: `${delay}ms` }}>
+        {children}
+      </Tag>
+    )
+  }
 
   return (
     <Tag
@@ -259,27 +273,46 @@ export function Card({
 
 /* ------------------------------------------------------------------- Image */
 
-/** Bare-bones image with a tonal placeholder so layout holds before load. */
+/**
+ * Bare-bones image with a tonal placeholder so layout holds before load.
+ * `priority` marks the page's LCP photo: fetched eagerly at high priority and
+ * shown at once instead of fading in, so it paints straight from the HTML.
+ */
 export function Img({
   src,
   alt,
+  width,
+  height,
   className = '',
   imgClassName = '',
-  loading = 'lazy',
+  priority = false,
 }: {
   src: string
   alt: string
+  width?: number
+  height?: number
   className?: string
   imgClassName?: string
-  loading?: 'lazy' | 'eager'
+  priority?: boolean
 }) {
-  const [loaded, setLoaded] = useState(false)
+  const ref = useRef<HTMLImageElement>(null)
+  const [loaded, setLoaded] = useState(priority)
+
+  // A prerendered image can finish loading before hydration attaches `onLoad`.
+  useEffect(() => {
+    if (ref.current?.complete) setLoaded(true)
+  }, [])
+
   return (
     <span className={`block overflow-hidden bg-blue/15 ${className}`}>
       <img
+        ref={ref}
         src={src}
         alt={alt}
-        loading={loading}
+        width={width}
+        height={height}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : undefined}
         decoding="async"
         onLoad={() => setLoaded(true)}
         className={`h-full w-full object-cover transition-opacity duration-700 ${

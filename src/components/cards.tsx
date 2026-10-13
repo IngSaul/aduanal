@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode, SVGProps } from 'react'
 import { Link } from 'react-router'
+import type { PhotoSource } from '../content/copy'
 import { Card, Img } from './ui'
 
 type IconType = ComponentType<SVGProps<SVGSVGElement>>
@@ -23,7 +24,7 @@ export function FeatureCard({
   title: string
   text: string
   to?: string
-  image?: string
+  image?: PhotoSource
 }) {
   const dark = Boolean(image)
 
@@ -80,7 +81,7 @@ export function FeatureCard({
     <div className="group relative isolate h-full min-h-[340px] overflow-hidden rounded-card bg-navy transition-all duration-400 ease-out hover:-translate-y-1.5 hover:shadow-[0_18px_40px_-24px_rgba(13,27,42,0.6)]">
       {/* Decorative: the title and text already say what the photo shows. */}
       <Img
-        src={image}
+        {...image}
         alt=""
         className="absolute inset-0 -z-10 h-full w-full"
         imgClassName="opacity-70 transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"

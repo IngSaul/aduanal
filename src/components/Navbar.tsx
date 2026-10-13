@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { CONTACT } from '../content/copy'
+import { PATHS } from '../seo/paths'
 import { useCopy } from '../i18n'
 import { Logo } from './Logo'
 import { IconClose, IconMenu, IconWhatsApp } from './icons'
@@ -44,7 +45,7 @@ export default function Navbar() {
             solid ? 'h-[68px]' : 'h-[84px]'
           }`}
         >
-          <Link to="/" aria-label={copy.brand.legal} className="shrink-0">
+          <Link to={PATHS.home} aria-label={copy.brand.legal} className="shrink-0">
             <Logo tone={solid ? 'navy' : 'white'} />
           </Link>
 

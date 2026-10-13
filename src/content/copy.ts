@@ -6,17 +6,48 @@
  * company presentation (`cliente/Presentación 1_compressed (1).pdf`).
  */
 
+import { PATHS } from '../seo/paths'
+import { SERVICE_AREA, SITE, cityLine } from '../seo/site'
+
 /** Client photograph under `public/images/`, by file name without extension. */
 export const photo = (name: string) => `${import.meta.env.BASE_URL}images/${name}.webp`
 
+/** Intrinsic size of each photo, so every `<img>` carries width and height. */
+const PHOTO_SIZES: Record<string, [number, number]> = {
+  'avion-carga-pista': [1200, 630],
+  'bodega-cajas-madera': [960, 1280],
+  'buque-carga-noche': [1200, 900],
+  'buque-vista-aerea': [960, 1280],
+  'contenedores-gruas-patio': [960, 1280],
+  'flota-buques-bahia': [1200, 630],
+  'garita-aduana-trailer': [1200, 900],
+  'gruas-puerto-noche-vertical': [960, 1280],
+  'hero-puerto-grua-ciudad': [1280, 960],
+  'pista-aeropuerto-sala': [960, 1280],
+  'puerto-ciudad-gruas-dia': [1280, 960],
+  'puerto-ciudad-panoramica': [1280, 687],
+  'puerto-gruas-noche': [1280, 960],
+  'terminal-amanecer': [1200, 585],
+  'terminal-gruas-azules': [1200, 900],
+  'terminal-gruas-contraluz': [1280, 960],
+}
+
+export type PhotoSource = { src: string; width: number; height: number }
+
+/** `src`, `width` and `height` for a photo, ready to spread into `<Img>`. */
+export const photoSource = (name: string): PhotoSource => {
+  const [width, height] = PHOTO_SIZES[name]
+  return { src: photo(name), width, height }
+}
+
 export const CONTACT = {
-  whatsapp: 'https://wa.me/524421160464',
-  whatsappLabel: '+52 442 116 0464',
-  phoneHref: 'tel:+524421160464',
-  email: 'infomx@andeus.mx',
-  address: 'Blvd. Centro Sur No. 3000, Col. Centro Sur',
-  addressCity: 'Querétaro, Qro. C.P. 76090',
-  coverage: 'Agencia aduanal en 10 plazas',
+  whatsapp: SITE.whatsappUrl,
+  whatsappLabel: SITE.phone,
+  phoneHref: `tel:${SITE.phoneE164}`,
+  email: SITE.email,
+  address: SITE.address.street,
+  addressCity: cityLine,
+  coverage: `Agencia aduanal en ${SERVICE_AREA.length} plazas`,
   /** Google Maps embed for the office, as provided by the client. */
   mapEmbed:
     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d933.865202430603!2d-100.3668988191129!3d20.569230879799743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d344bdd9b48bdb%3A0x9d8da6b170495c2f!2sBlvd.%20Centro%20Sur%203000%2C%20Centro%20Sur%2C%2076093%20Santiago%20de%20Quer%C3%A9taro%2C%20Qro.!5e0!3m2!1ses!2smx!4v1791325347436!5m2!1ses!2smx',
@@ -25,34 +56,23 @@ export const CONTACT = {
 /** Headline fragment where the middle words are set in the brand gold. */
 export type Accented = { lead: string; accent: string; tail: string }
 
-/** Plazas where the customs brokerage and trading company operates. */
-const CUSTOMS_POINTS = [
-  'Nuevo Laredo',
-  'Manzanillo',
-  'Veracruz',
-  'Querétaro',
-  'CDMX',
-  'Lázaro Cárdenas',
-  'Altamira',
-  'Laredo',
-  'Guadalajara',
-  'Monterrey',
-]
+/** Plain-text version of an accented headline. */
+export const accentedText = ({ lead, accent, tail }: Accented) => `${lead}${accent}${tail}`
 
 export const es = {
   brand: {
     name: 'ANDEUS',
     descriptor: 'Group',
-    legal: 'Andeus Group',
+    legal: SITE.name,
     tagline: 'Estrategia, servicio personalizado y calidad en cada operación.',
   },
 
   nav: {
     items: [
-      { to: '/', label: 'Inicio' },
-      { to: '/servicios', label: 'Servicios' },
-      { to: '/nosotros', label: 'Nosotros' },
-      { to: '/contacto', label: 'Contacto' },
+      { to: PATHS.home, label: 'Inicio' },
+      { to: PATHS.services, label: 'Servicios' },
+      { to: PATHS.about, label: 'Nosotros' },
+      { to: PATHS.contact, label: 'Contacto' },
     ],
     /** Placeholder anchor until the blog has content. */
     blog: { href: '#blog', label: 'Blog' },
@@ -81,6 +101,7 @@ export const es = {
     } as Accented,
     heroSubtitle:
       'Consultores especializados que garantizan el cumplimiento del marco jurídico aduanero de tus operaciones, con un servicio de estrategia, personalizado y de calidad.',
+    heroImage: 'hero-puerto-grua-ciudad',
     heroImageAlt: 'Grúas de una terminal de contenedores frente a los edificios de la ciudad, vistas desde el mar',
     heroFacts: [
       { label: 'Servicios', value: 'Consultoría, auditoría y certificación' },
@@ -204,6 +225,7 @@ export const es = {
     title: 'Consultoría, auditoría, certificación y logística',
     lead:
       'Seis líneas de servicio con consultores altamente capacitados, para que tu empresa opere su comercio exterior con estrategia y cumplimiento.',
+    heroImage: 'puerto-ciudad-panoramica',
     heroImageAlt: 'Panorámica de un puerto con grúas de contenedores y la ciudad al fondo',
     indexTitle: 'Índice de servicios',
     ctaTitle: '¿Tu empresa necesita más de un servicio?',
@@ -319,7 +341,7 @@ export const es = {
         'Seguro de mercancía',
         'Agencia aduanal y comercializadora',
       ],
-      appliesTo: CUSTOMS_POINTS,
+      appliesTo: SERVICE_AREA,
       image: 'terminal-amanecer',
       imageAlt: 'Terminal de contenedores con sus grúas al amanecer, vista desde el agua',
     },
@@ -339,6 +361,7 @@ export const es = {
     title: 'Un despacho de consultores especializados en comercio exterior',
     lead:
       'Andeus Group brinda soluciones integrales de logística, transporte y comercio exterior a empresas que operan en México.',
+    heroImage: 'terminal-gruas-contraluz',
     heroImageAlt: 'Grúas de una terminal portuaria a contraluz sobre el mar',
 
     storyEyebrow: '01 — Quiénes somos',
@@ -365,6 +388,7 @@ export const es = {
     title: 'Hablemos de tu empresa',
     lead:
       'Cuéntanos qué necesita tu operación de comercio exterior y te ayudamos a definir la estrategia adecuada.',
+    heroImage: 'puerto-ciudad-gruas-dia',
     heroImageAlt: 'Grúas de contenedores y edificios de la ciudad en la orilla, vistos desde el mar bajo un cielo con nubes',
 
     infoTitle: 'Información de contacto',
@@ -388,17 +412,17 @@ export const es = {
     infoTitle: 'Servicios',
     socialTitle: 'Síguenos',
     info: [
-      { label: 'Consultoría', to: '/servicios#consultoria' },
-      { label: 'Auditoría', to: '/servicios#auditoria' },
-      { label: 'Certificación NOM', to: '/servicios#certificacion-nom' },
-      { label: 'Logística y Transporte', to: '/servicios#logistica-transporte' },
+      { label: 'Consultoría', to: `${PATHS.services}#consultoria` },
+      { label: 'Auditoría', to: `${PATHS.services}#auditoria` },
+      { label: 'Certificación NOM', to: `${PATHS.services}#certificacion-nom` },
+      { label: 'Logística y Transporte', to: `${PATHS.services}#logistica-transporte` },
     ],
     social: [
-      { label: 'Instagram', href: 'https://www.instagram.com/andeus_group/' },
+      ...SITE.social.map((s) => ({ label: s.label, href: s.url })),
       { label: 'WhatsApp', href: CONTACT.whatsapp },
     ],
-    rights: '© 2026 Andeus Group. Todos los derechos reservados.',
-    privacy: { label: 'Aviso de privacidad', to: '/aviso-de-privacidad' },
+    rights: `© 2026 ${SITE.name}. Todos los derechos reservados.`,
+    privacy: { label: 'Aviso de privacidad', to: PATHS.privacy },
     credit: { label: 'Sitio desarrollado por', studio: 'Avalon Nova', href: 'https://avalonnova.com' },
   },
 
@@ -406,6 +430,7 @@ export const es = {
     eyebrow: 'Legal',
     title: 'Aviso de privacidad',
     lead: 'Cómo Andeus Group trata los datos personales de quienes nos contactan y de nuestros clientes.',
+    heroImage: 'puerto-gruas-noche',
     heroImageAlt: 'Grúas de un puerto iluminadas de noche, reflejadas en el agua',
     updated: 'Última actualización: 6 de octubre de 2026',
     sections: [
