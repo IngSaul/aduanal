@@ -1,0 +1,19 @@
+services:
+  aduanal:
+    build:
+      context: .
+      args:
+        VITE_SANITY_PROJECT_ID: "cu9ucb18"
+        VITE_SANITY_DATASET: "production"
+    container_name: aduanal
+    restart: unless-stopped
+    networks: [homelab]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.aduanal.rule=Host(`aduanal.avalonnova.com`)
+      - traefik.http.routers.aduanal.entrypoints=web
+      - traefik.http.services.aduanal.loadbalancer.server.port=80
+
+networks:
+  homelab:
+    external: true

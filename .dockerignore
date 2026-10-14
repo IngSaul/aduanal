@@ -1,0 +1,8 @@
+node_modules
+studio
+.git
+.env*
+dist
+dist-ssr
+cliente
+*.log

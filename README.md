@@ -121,3 +121,37 @@ server {
     location ~* \.(webp|avif|png|jpe?g|svg|ico)$ { add_header Cache-Control "public, max-age=2592000"; }
 }
 ```
+
+## Deploy (demo en el homelab)
+
+El demo https://aduanal.avalonnova.com corre en el homelab con Docker detrás de Traefik (red externa `homelab`). Los archivos de deploy están en la raíz del repositorio:
+
+- `Dockerfile`: dos etapas. `node:22-alpine` corre `npm ci` y `npm run build` (el prerender consulta Sanity en ese momento) y borra `og-preview.html` y `.htaccess`; `nginx:alpine` sirve `dist/`.
+- `nginx.conf`: equivalente de `public/.htaccess`: archivos prerenderizados, 301 a barra final, `/blog/<slug>/` sin carpeta → `blog-shell.html` (200), 404 real con `/404.html`, gzip y caché (`/assets/` un año immutable, HTML `no-cache`, imágenes un mes). No fuerza https ni dominio: TLS lo resuelven Traefik/Cloudflare (forzarlo causaría un loop) y las redirecciones son relativas (`absolute_redirect off`).
+- `docker-compose.yml`: build args de Sanity (`VITE_SANITY_PROJECT_ID`, `VITE_SANITY_DATASET`; no son secretos), labels de Traefik y la red `homelab`.
+- `.dockerignore`: deja fuera `node_modules`, `studio`, `.git`, `.env*`, `dist`, `dist-ssr`, `cliente` y logs. El `.env` local no entra a la imagen; las variables llegan por los build args.
+
+Para desplegar, haz push y en el servidor:
+
+```bash
+cd /srv/docker/demos/aduanal
+git pull
+docker compose up -d --build
+```
+
+En el log del build debe aparecer `blog: N post(s) from Sanity`, sin el aviso `Sanity did not answer`. Si Sanity no responde, el build sigue y `/blog/` queda vacío.
+
+Como el blog se prerenderiza en el build, una noticia nueva necesita repetir `docker compose up -d --build` para tener su HTML, su vista previa al compartir y su entrada en el sitemap. Mientras tanto se ve igual gracias a `blog-shell.html`.
+
+Prueba local sin Traefik (la red `homelab` no hace falta para construir):
+
+```bash
+docker compose build --progress=plain
+docker run --rm -d -p 8080:80 --name aduanal-test aduanal-aduanal
+for p in / /servicios /servicios/ /blog/ /blog/<slug>/ /blog/no-existe/ /no-existe/; do
+  echo "$p $(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' "http://localhost:8080$p")"
+done
+docker stop aduanal-test
+```
+
+Esperado: `/servicios` → 301 a `/servicios/`; `/blog/no-existe/` → 200 (shell); `/no-existe/` → 404.
