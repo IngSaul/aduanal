@@ -1,6 +1,61 @@
 # Andeus Group — sitio web
 
-Sitio de Andeus Group (comercio exterior, logística y despacho aduanal). React + Vite + Tailwind, prerenderizado a HTML estático en el build.
+Sitio de Andeus Group (comercio exterior, logística y despacho aduanal). React + Vite + Tailwind, prerenderizado a HTML estático en el build. Solo el blog «Noticias» es administrable (Sanity); el resto del contenido vive en `src/content/copy.ts`.
+
+- **Demo:** https://aduanal.avalonnova.com (con `noindex` hasta el lanzamiento)
+- **Producción:** https://andeus.mx (pendiente de hosting)
+- **Studio:** https://andeus.sanity.studio (pendiente de desplegar)
+
+## Pendientes
+
+Lista para pedir las cosas en orden. Marca cada punto al resolverlo y quítalo de aquí cuando ya esté reflejado en el sitio.
+
+### Lo que necesitamos de la clienta (Andeus Group)
+
+En orden de prioridad. Los dos primeros bloquean el lanzamiento.
+
+1. **Hosting de andeus.mx.** Proveedor, tipo de servidor (cPanel/Apache, nginx u otro), forma de acceso (panel, FTP o SSH) y quién administra el DNS. Lo necesitamos para publicar el sitio y configurar la recompilación automática del blog.
+2. **Personas que publicarán noticias.** El nombre y el correo de cada una, para invitarlas como Editor al Studio, y una fecha para la capacitación (pidió que les enseñemos a actualizar el sitio).
+3. **Código postal de la oficina.** El sitio dice 76090 y el pin de Google Maps que envió dice 76093. Tiene que ser el mismo en el sitio, en Google y en el Perfil de Negocio.
+4. **Primeras noticias reales.** Dos o tres para lanzar el blog con contenido: título, texto, fecha y una foto propia por noticia, sin logos de otras empresas ni personas identificables.
+5. **Horario de atención** (opcional). Se publica en Google y en los datos estructurados; si no lo da, no se muestra.
+6. **Otras redes sociales.** Hoy solo tenemos Instagram. Si existen LinkedIn, Facebook o X, las URLs.
+7. **Google.** Si ya tiene un Perfil de Negocio de Google, que nos agregue como administradores. Si no, confirmar que lo creamos con los mismos datos del sitio. Para Search Console, la cuenta de Google con la que quiere administrar el dominio.
+8. **Analítica.** Si quiere medir visitas con Google Analytics. Hoy el aviso de privacidad dice que el sitio no usa analítica ni cookies, así que activarla implica actualizar ese texto.
+9. **Aprobaciones de texto** (sugerencias SEO, opcionales):
+   - Que el título principal de Inicio mencione «agencia aduanal», por ejemplo: «Agencia aduanal y consultoría en comercio exterior en Querétaro».
+   - Preguntas frecuentes por servicio, o contenido para páginas propias de los servicios clave (despacho aduanal, certificación NOM, IMMEX), que ayudarían a posicionar.
+
+### Lo que me toca (Avalon Nova)
+
+1. **Desplegar el Studio:** `cd studio && npx sanity deploy`. Después, copiar el `appId` que muestra la consola a `deployment.appId` en `studio/sanity.cli.ts` y hacer commit.
+2. **CORS del Studio local:** en sanity.io/manage → API → CORS, agregar `http://localhost:3333` con credenciales.
+3. **Limpiar la noticia de prueba** `noticia-de-prueba1`: su portada es la foto con el avión de United (marca de terceros) y el extracto tiene 28 caracteres. Borrarla antes de mostrar el sitio.
+4. **Invitar a las editoras** en sanity.io/manage → Members, con el rol Editor, cuando la clienta dé los correos (punto 2), y dar la capacitación.
+5. **Cuando haya hosting** (punto 1): configurar el despliegue de `dist/`, el webhook de Sanity (ver «Publicar noticias nuevas») y la configuración del servidor (Apache o nginx), y quitar los `TODO(hosting)`.
+6. **Decisiones técnicas abiertas:**
+   - Opacidad de las fotos: `Img` aplica `opacity-100` y anula las opacidades de los heroes y las tarjetas, así que las fotos se ven al 100 %. Corregirlo cambia el aspecto actual.
+   - Alojar Montserrat en el propio sitio (quitaría unos 850 ms del LCP en móvil). Requiere descargar los archivos de la fuente.
+   - Si el repositorio se va a compartir: borrar del historial de git la presentación PDF de la clienta (requiere reescribir el historial y hacer force push).
+
+### Al lanzar en andeus.mx
+
+1. En `src/seo/site.ts`: `allowIndexing: true`. Si ya los tenemos, llenar `googleSiteVerification` y `ga4Id` (este último solo si la clienta aprobó la analítica y se actualizó el aviso de privacidad).
+2. `npm run build` y `npm run seo:check`, que deben pasar.
+3. Subir `dist/` **sin** `og-preview.html`.
+4. Search Console: verificar el dominio, enviar `https://andeus.mx/sitemap.xml` e inspeccionar la URL de inicio.
+5. Vistas previas al compartir: pasar cada URL por el [Sharing Debugger de Facebook](https://developers.facebook.com/tools/debug/) («Volver a extraer») y por el [Post Inspector de LinkedIn](https://www.linkedin.com/post-inspector/), y mandarse los enlaces por WhatsApp.
+6. Perfil de Negocio de Google con el mismo nombre, dirección y teléfono que el sitio, y pedir reseñas reales a sus clientes.
+
+## Instalación
+
+```bash
+npm install
+cp .env.example .env            # projectId y dataset de Sanity
+(cd studio && npm install)      # solo si vas a trabajar en el Studio
+```
+
+`node_modules/` no se versiona.
 
 ## Comandos
 
@@ -52,9 +107,9 @@ El Studio solo muestra **Noticias** y **Categorías**, en español.
 
 1. **Proyecto:** ya existe (`cu9ucb18`, dataset `production`). Si se crea otro: https://www.sanity.io/manage → *Create project* → dataset `production`, y actualiza `.env` y `studio/env.ts`.
 2. **Dataset público:** *Datasets* → `production` → *Visibility: Public*. El sitio lee sin token.
-3. **CORS:** *API* → *CORS origins* → agrega sin credenciales: `http://localhost:8443`, el dominio del demo `https://aduanal.avalonnova.com` (ya agregado) y `https://andeus.mx`. Para el Studio local, `http://localhost:3333` con credenciales.
+3. **CORS:** *API* → *CORS origins* → sin credenciales: `http://localhost:8443`, `https://aduanal.avalonnova.com` y `https://andeus.mx` (ya agregados). Falta `http://localhost:3333` con credenciales para el Studio local (ver Pendientes).
 4. **Desplegar el Studio:** `cd studio && npx sanity deploy` (usa `studioHost: 'andeus'` → https://andeus.sanity.studio). Después del primer deploy, copia el `appId` que muestra la consola a `deployment.appId` en `studio/sanity.cli.ts`.
-5. **Invitar a la clienta:** *Members* → *Invite* → su correo con el rol **Editor** (puede crear, editar y publicar noticias, no cambiar la configuración del proyecto).
+5. **Invitar a las editoras:** *Members* → *Invite* → cada correo con el rol **Editor** (pueden crear, editar y publicar noticias, no cambiar la configuración del proyecto).
 
 ### Publicar noticias nuevas (webhook)
 

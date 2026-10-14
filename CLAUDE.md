@@ -5,6 +5,8 @@
 - This repo is a client project for Avalon Nova avalonnova.com (a demo for a customs agency).
 - The client is Andeus Group (comercio exterior, logística y despacho aduanal, Querétaro). The site is Spanish only.
 - Vite + React + Tailwind. `npm run dev` serves on port 8443; `npm run build` must pass before handing work back.
+- `node_modules/` is not tracked: run `npm install` in the root and in `studio/` after cloning. `.env` (gitignored) comes from `.env.example`.
+- The README's "Pendientes" section is the running list of what the client and Avalon Nova still owe. Update it when an item is resolved or a new one appears.
 
 ## Content
 
@@ -13,8 +15,8 @@
 
 ## SEO and prerender
 
-- `npm run build` = client build + SSR build (`dist-ssr/`) + `scripts/prerender.mjs`, which writes every public route to `dist/<path>/index.html`, plus `404.html` and `sitemap.xml`. Run `npm run seo:check` after it; it must pass.
-- Page metadata lives only in `src/seo/routes.ts` (title 50–60 chars ending in "| Andeus Group", description 140–160, h1 read from the copy, schema, sitemap fields, empty `ogImage` for the OG step). NAP data lives only in `src/seo/site.ts`; `copy.ts` derives `CONTACT` from it.
+- `npm run build` = client build + SSR build (`dist-ssr/`) + `scripts/prerender.mjs`, which fetches the blog from Sanity and writes every public route (blog posts included) to `dist/<path>/index.html`, plus `404.html`, `blog-shell.html`, `sitemap.xml` and the local-only `og-preview.html` (never deploy it). Run `npm run seo:check` after it; it must pass (editorial warnings on posts are allowed).
+- Page metadata lives only in `src/seo/routes.ts` (title 50–60 chars ending in "| Andeus Group", description 140–160, h1 read from the copy, schema, sitemap fields, OG fields). NAP data lives only in `src/seo/site.ts`; `copy.ts` derives `CONTACT` from it.
 - Canonical paths have a trailing slash and come from `PATHS` in `src/seo/paths.ts` — use it for every internal link. A new public page needs an entry in `paths.ts`, `seo/routes.ts` and `src/routes.tsx`.
 - The app hydrates prerendered HTML: no `window`/`document` outside effects, no random or time-dependent render output. Above-the-fold `Reveal`s use `onLoad` (CSS-only animation) so the LCP never waits for JS; the hero `Img` uses `priority`.
 - Indexing is off until launch: `allowIndexing: false` in `src/seo/site.ts` makes every page `noindex,follow` (head, client sync, blog shell; `seo:check` enforces it). The site currently lives on the demo https://aduanal.avalonnova.com. At launch on andeus.mx, set it to `true`, rebuild, run `seo:check` and redeploy — that one flag is the only change needed.
@@ -38,7 +40,9 @@
 - Originals arrive in `cliente/imagenes/` (WhatsApp exports, max 1280px wide). Never edit them; export copies with ImageMagick: `-auto-orient -strip`, max 1920px for heroes / 1200px otherwise, `-quality 80`, kebab-case names. Do not upscale and do not add image dependencies to `package.json`.
 - Image cards on Home put a dark gradient over the lower half, so the subject should sit in the upper half — crop sky from the source if needed.
 - Alt text is in Spanish and describes the actual photo; decorative backdrops use `alt=""`.
-- Heroes keep the photo prominent: the image sits at 60% opacity (65% on Home) under a navy gradient that stays dense only behind the text. Reframe a hero photo with `PageHero`'s `imagePosition` (e.g. `object-[center_72%]` on Nosotros) instead of re-cropping the file.
+- Heroes keep the photo prominent: a navy gradient stays dense only behind the text. Note: the `opacity-60/65/70` classes passed to `Img` are overridden by its own `opacity-100` (both utilities apply; the later one wins), so photos actually render at full opacity and the veil comes from the gradient alone. Fixing that changes the look — it is a pending decision in the README, don't "fix" it silently.
+- Reframe a hero photo with `PageHero`'s `imagePosition` (e.g. `object-[center_72%]` on Nosotros) instead of re-cropping the file.
+- Brand assets come from `cliente/logo.ai`: `public/brand/` (logo SVGs, symbol, raster logo for schema). The visible header/footer logo is still the typeset `Logo.tsx`.
 
 ## Client material
 
