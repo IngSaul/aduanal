@@ -64,6 +64,13 @@ export const es = {
     name: 'ANDEUS',
     descriptor: 'Group',
     legal: SITE.name,
+    /** Official logo from cliente/logo.ai: full color for light backgrounds, white lettering for dark ones. */
+    logo: {
+      navy: `${import.meta.env.BASE_URL}brand/andeus-logo.svg`,
+      white: `${import.meta.env.BASE_URL}brand/andeus-logo-blanco.svg`,
+      width: 472,
+      height: 169,
+    },
     tagline: 'Estrategia, servicio personalizado y calidad en cada operación.',
   },
 

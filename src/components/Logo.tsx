@@ -1,21 +1,37 @@
 import { useCopy } from '../i18n'
 
 /**
- * Andeus Group wordmark, set in type the way the brand presentation does it:
- * a bold "ANDEUS" and a light, wide-tracked "GROUP". Stands in until the
- * official logo file (gold swoosh) is supplied and placed under `public/brand/`.
+ * Official Andeus Group logo (gold swoosh + lettering) from `public/brand/`.
+ * Both versions are stacked and cross-fade, so the navbar can switch tone on
+ * scroll without a flash while the other file loads. `className` sets the height.
  */
-export function Logo({ tone = 'navy', className = '' }: { tone?: 'navy' | 'white'; className?: string }) {
+export function Logo({ tone = 'navy', className = 'h-14' }: { tone?: 'navy' | 'white'; className?: string }) {
   const copy = useCopy()
-  const text = tone === 'navy' ? 'text-navy' : 'text-white'
-  const sub = tone === 'navy' ? 'text-steel' : 'text-light/75'
+  const { logo, legal } = copy.brand
+  const versions = [
+    { key: 'navy', src: logo.navy },
+    { key: 'white', src: logo.white },
+  ] as const
 
   return (
-    <span className={`flex items-baseline gap-2.5 leading-none ${className}`}>
-      <span className={`text-[19px] font-extrabold tracking-[0.2em] ${text}`}>{copy.brand.name}</span>
-      <span className={`text-[15px] font-light tracking-[0.24em] uppercase ${sub}`}>
-        {copy.brand.descriptor}
-      </span>
+    <span className={`relative block aspect-[472/169] ${className}`}>
+      {versions.map(({ key, src }) => {
+        const shown = key === tone
+        return (
+          <img
+            key={key}
+            src={src}
+            width={logo.width}
+            height={logo.height}
+            alt={shown ? legal : ''}
+            aria-hidden={shown ? undefined : true}
+            decoding="async"
+            className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
+              shown ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )
+      })}
     </span>
   )
 }

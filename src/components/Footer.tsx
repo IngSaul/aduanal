@@ -20,7 +20,7 @@ export default function Footer() {
       <div className="container-page">
         <div className="grid gap-14 border-b border-white/10 py-16 md:py-20 lg:grid-cols-[1.5fr_1fr_1.1fr_1fr] lg:gap-10">
           <div className="max-w-sm">
-            <Logo tone="white" />
+            <Logo tone="white" className="h-20" />
             <p className="mt-6 text-[14px] leading-[1.8] text-light/65">{copy.footer.blurb}</p>
             <p className="mt-6 text-[15px] leading-snug font-semibold tracking-[-0.01em] text-gold">
               {copy.brand.tagline}

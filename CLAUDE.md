@@ -42,7 +42,7 @@
 - Alt text is in Spanish and describes the actual photo; decorative backdrops use `alt=""`.
 - Heroes keep the photo prominent: a navy gradient stays dense only behind the text. Note: the `opacity-60/65/70` classes passed to `Img` are overridden by its own `opacity-100` (both utilities apply; the later one wins), so photos actually render at full opacity and the veil comes from the gradient alone. Fixing that changes the look — it is a pending decision in the README, don't "fix" it silently.
 - Reframe a hero photo with `PageHero`'s `imagePosition` (e.g. `object-[center_72%]` on Nosotros) instead of re-cropping the file.
-- Brand assets come from `cliente/logo.ai`: `public/brand/` (logo SVGs, symbol, raster logo for schema). The visible header/footer logo is still the typeset `Logo.tsx`.
+- Brand assets come from `cliente/logo.ai`: `public/brand/` (logo SVGs, symbol, raster logo for schema). `Logo.tsx` shows the official SVG in the navbar and footer (`andeus-logo.svg` on light backgrounds, `andeus-logo-blanco.svg` on dark); paths live in `copy.brand.logo`.
 
 ## Client material
 

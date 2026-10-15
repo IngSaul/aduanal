@@ -46,7 +46,10 @@ export default function Navbar() {
           }`}
         >
           <Link to={PATHS.home} aria-label={copy.brand.legal} className="shrink-0">
-            <Logo tone={solid ? 'navy' : 'white'} />
+            <Logo
+              tone={solid ? 'navy' : 'white'}
+              className={`transition-[height] duration-500 ${solid ? 'h-14' : 'h-16'}`}
+            />
           </Link>
 
           <nav aria-label={copy.brand.legal} className="hidden items-center gap-9 lg:flex">
