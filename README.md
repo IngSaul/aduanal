@@ -19,10 +19,11 @@ En orden de prioridad. Los dos primeros bloquean el lanzamiento.
 3. **Código postal de la oficina.** El sitio dice 76090 y el pin de Google Maps que envió dice 76093. Tiene que ser el mismo en el sitio, en Google y en el Perfil de Negocio.
 4. **Primeras noticias reales.** Dos o tres para lanzar el blog con contenido: título, texto, fecha y una foto propia por noticia, sin logos de otras empresas ni personas identificables.
 5. **Horario de atención** (opcional). Se publica en Google y en los datos estructurados; si no lo da, no se muestra.
-6. **Otras redes sociales.** Hoy solo tenemos Instagram. Si existen LinkedIn, Facebook o X, las URLs.
+6. **Otras redes sociales.** Hoy tenemos Instagram y Facebook. Si existen LinkedIn o X, las URLs.
 7. **Google.** Si ya tiene un Perfil de Negocio de Google, que nos agregue como administradores. Si no, confirmar que lo creamos con los mismos datos del sitio. Para Search Console, la cuenta de Google con la que quiere administrar el dominio.
 8. **Analítica.** Si quiere medir visitas con Google Analytics. Hoy el aviso de privacidad dice que el sitio no usa analítica ni cookies, así que activarla implica actualizar ese texto.
-9. **Aprobaciones de texto** (sugerencias SEO, opcionales):
+9. **Fotos de servicios y de «Quiénes somos» en mayor resolución.** Las que envió en «Diapositiva Comercial de Comercio Exterior» miden de 362 a 502 px de ancho y en pantallas grandes se ven algo suaves. Si tiene los archivos originales (sin pasar por PowerPoint), pedirlos; se reexportan con los mismos nombres.
+10. **Aprobaciones de texto** (sugerencias SEO, opcionales):
    - Que el título principal de Inicio mencione «agencia aduanal», por ejemplo: «Agencia aduanal y consultoría en comercio exterior en Querétaro».
    - Preguntas frecuentes por servicio, o contenido para páginas propias de los servicios clave (despacho aduanal, certificación NOM, IMMEX), que ayudarían a posicionar.
 

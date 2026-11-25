@@ -30,7 +30,7 @@ export default function About() {
           <Reveal>
             <div className="relative lg:sticky lg:top-28">
               <Img
-                {...photoSource('buque-vista-aerea')}
+                {...photoSource(about.storyImage)}
                 alt={about.storyImageAlt}
                 className="aspect-square w-full rounded-card"
               />

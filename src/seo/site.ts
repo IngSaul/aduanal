@@ -52,7 +52,10 @@ export const SITE = {
   /** Customs points plus the country as a whole. */
   areaServed: [...SERVICE_AREA, 'México'],
 
-  social: [{ label: 'Instagram', url: 'https://www.instagram.com/andeus_group/' }],
+  social: [
+    { label: 'Facebook', url: 'https://www.facebook.com/p/Andeus-GROUP-100092546842793/' },
+    { label: 'Instagram', url: 'https://www.instagram.com/andeus_group/' },
+  ],
   /** X (Twitter) handle with @. Empty: the brand has no account, so no twitter:site. */
   xHandle: '',
 

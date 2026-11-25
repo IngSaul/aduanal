@@ -15,10 +15,15 @@ export const photo = (name: string) => `${import.meta.env.BASE_URL}images/${name
 /** Intrinsic size of each photo, so every `<img>` carries width and height. */
 const PHOTO_SIZES: Record<string, [number, number]> = {
   'avion-carga-pista': [1200, 630],
+  'auditoria-patio-contenedores': [455, 455],
   'bodega-cajas-madera': [960, 1280],
   'buque-carga-noche': [1200, 900],
   'buque-vista-aerea': [960, 1280],
+  'capacitacion-presentacion': [455, 455],
+  'certificacion-nom-revision': [502, 502],
+  'consultoria-sala-juntas': [455, 455],
   'contenedores-gruas-patio': [960, 1280],
+  'equipo-reunion-estrategia': [362, 362],
   'flota-buques-bahia': [1200, 630],
   'garita-aduana-trailer': [1200, 900],
   'gruas-puerto-noche-vertical': [960, 1280],
@@ -30,6 +35,7 @@ const PHOTO_SIZES: Record<string, [number, number]> = {
   'terminal-amanecer': [1200, 585],
   'terminal-gruas-azules': [1200, 900],
   'terminal-gruas-contraluz': [1280, 960],
+  'tramites-oficina-puerto': [502, 502],
 }
 
 export type PhotoSource = { src: string; width: number; height: number }
@@ -262,8 +268,8 @@ export const es = {
         'Asesoría legal corporativa y mercantil',
         'Propiedad intelectual',
       ],
-      image: 'terminal-gruas-azules',
-      imageAlt: 'Grúas pórtico azules en el muelle de una terminal de contenedores',
+      image: 'consultoria-sala-juntas',
+      imageAlt: 'Consultor expone frente a un mapa de rutas comerciales en una sala de juntas con su equipo',
     },
     {
       id: 'capacitacion',
@@ -279,8 +285,8 @@ export const es = {
         'Protección de datos',
         'Propiedad intelectual',
       ],
-      image: 'flota-buques-bahia',
-      imageAlt: 'Buques mercantes fondeados en una bahía, vistos desde un avión',
+      image: 'capacitacion-presentacion',
+      imageAlt: 'Instructora imparte una capacitación frente a una pantalla con gráficas',
     },
     {
       id: 'auditoria',
@@ -298,8 +304,8 @@ export const es = {
         'Auditoría de Anexo 24',
         'Auditoría legal corporativa y mercantil',
       ],
-      image: 'bodega-cajas-madera',
-      imageAlt: 'Cajas de madera con mercancía embalada dentro de una bodega',
+      image: 'auditoria-patio-contenedores',
+      imageAlt: 'Supervisor con casco explica a un grupo con chalecos de seguridad en un patio de contenedores junto a un buque',
     },
     {
       id: 'certificacion-nom',
@@ -316,8 +322,8 @@ export const es = {
         'Traducción de manuales y fichas técnicas',
         'Trámite de folios SOL',
       ],
-      image: 'buque-carga-noche',
-      imageAlt: 'Buque portacontenedores cargado bajo las grúas de un puerto de noche',
+      image: 'certificacion-nom-revision',
+      imageAlt: 'Dos especialistas revisan certificados NOM y listas de verificación junto a productos eléctricos',
     },
     {
       id: 'tramites-certificaciones',
@@ -334,8 +340,8 @@ export const es = {
         'OEA / C-TPAT',
         'Avisos automáticos de importación / exportación',
       ],
-      image: 'avion-carga-pista',
-      imageAlt: 'Avión de carga en la pista de un aeropuerto',
+      image: 'tramites-oficina-puerto',
+      imageAlt: 'Consultores revisan documentos de comercio exterior en una oficina con vista a un puerto de contenedores',
     },
     {
       id: 'logistica-transporte',
@@ -381,7 +387,8 @@ export const es = {
       'Nuestra propuesta es brindar a su empresa soluciones integrales con servicios personalizados a través de nuestros consultores altamente capacitados: un servicio de estrategia, personalizado y de calidad, alineado a sus necesidades.',
       'Nuestros servicios abarcan consultoría, capacitación, auditoría, certificación NOM, trámites y certificaciones, despacho aduanal, y logística y transporte nacional e internacional.',
     ],
-    storyImageAlt: 'Buque portacontenedores navegando en mar abierto, visto desde el aire',
+    storyImage: 'equipo-reunion-estrategia',
+    storyImageAlt: 'Equipo de consultores revisa mapas y reportes en una mesa de juntas',
 
     valueBlockEyebrow: '02 — Compromiso',
     valueBlockTitle: 'Lo que nos distingue',
@@ -505,7 +512,7 @@ export const es = {
       {
         title: 'Cookies y servicios de terceros',
         body: [
-          'Este sitio no utiliza cookies propias ni herramientas de analítica. La página de contacto muestra un mapa de Google Maps y el sitio incluye enlaces a WhatsApp e Instagram; al usarlos, esos servicios pueden recabar información conforme a sus propias políticas de privacidad.',
+          'Este sitio no utiliza cookies propias ni herramientas de analítica. La página de contacto muestra un mapa de Google Maps y el sitio incluye enlaces a WhatsApp, Facebook e Instagram; al usarlos, esos servicios pueden recabar información conforme a sus propias políticas de privacidad.',
         ],
       },
       {
